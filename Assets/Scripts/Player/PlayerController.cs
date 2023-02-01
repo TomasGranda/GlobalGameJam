@@ -24,8 +24,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public Vector3 moveDirection = Vector3.zero;
 
-    public bool cliffAnimation;
-
     private Commands commands;
 
     void Start()
@@ -40,54 +38,29 @@ public class PlayerController : MonoBehaviour
         ClimbCommand climbCommand = new ClimbCommand(this);
         ClimbCliffCommand climbCliffCommand = new ClimbCliffCommand(this);
         LeaveCliffCommand leaveCliffCommand = new LeaveCliffCommand(this);
-        AttackCommand attackCommand = new AttackCommand(this);
 
         commands.AddCommand(climbCommand);
         commands.AddCommand(climbCliffCommand);
         commands.AddCommand(leaveCliffCommand);
         commands.AddCommand(moveCommand);
         commands.AddCommand(jumpCommand);
-        commands.AddCommand(attackCommand);
     }
-
-    // TODO: Borrar
-    int counter = 0;
 
     void Update()
     {
-        if (!cliffAnimation)
+        commands.ExecuteCommands();
+
+        // Gravity
+        if (!IsOnClimb())
         {
-            commands.ExecuteCommands();
+            if (!isOnFloor)
+                moveDirection.y -= model.gravityMagnitude * Time.deltaTime;
 
-
-            // Gravity
-            if (!IsOnClimb())
-            {
-                if (!isOnFloor)
-                    moveDirection.y -= model.gravityMagnitude * Time.deltaTime;
-
-                characterController.Move(moveDirection * Time.deltaTime);
-            }
-
-            CheckWalls();
-            CheckIsPlayerOnFloor();
+            characterController.Move(moveDirection * Time.deltaTime);
         }
-        else
-        {
-            if (counter <= 2)
-                characterController.Move(Vector3.up);
 
-            if (counter > 2 && counter < 4)
-                characterController.Move(Vector3.right);
-
-            counter++;
-
-            if (counter >= 4)
-            {
-                cliffAnimation = false;
-                counter = 0;
-            }
-        }
+        CheckWalls();
+        CheckIsPlayerOnFloor();
     }
 
     #region RaycastCheckers
@@ -128,11 +101,6 @@ public class PlayerController : MonoBehaviour
         return inputAsset.FindAction("Jump").WasPressedThisFrame();
     }
 
-    public bool GetShootButtonDown()
-    {
-        return inputAsset.FindAction("Shoot").WasPressedThisFrame();
-    }
-
     public bool GetClimbCliffButtonDown()
     {
         return inputAsset.FindAction("ClimbCliff").WasPressedThisFrame();
@@ -156,16 +124,6 @@ public class PlayerController : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawRay(transform.position, Vector3.down * model.groundCheckRaycastLenght);
             Gizmos.DrawWireSphere(transform.position, model.wallCheckRaycastLenght);
-
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 2000))
-            {
-                var direction = hit.point - transform.position;
-
-                Gizmos.DrawRay(transform.position, direction * 300);
-            }
         }
     }
 }
