@@ -10,6 +10,13 @@ public class CameraController : MonoBehaviour
 
     public LayerMask targetableLayer;
 
+    public GameObject targetImagePrefab;
+
+    private GameObject targetImage;
+
+    public Canvas canvas;
+
+
     void Start()
     {
         player = FindObjectOfType<PlayerController>().transform;
@@ -18,6 +25,9 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
+        Destroy(targetImage);
+        targetImage = null;
+
         var newPosition = new Vector3(initialPosition.x + player.position.x, initialPosition.y, initialPosition.z);
         transform.position = newPosition;
 
@@ -25,9 +35,9 @@ public class CameraController : MonoBehaviour
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 2000))
+        if (Physics.Raycast(ray, out hit, 2000) && hit.collider.transform.GetComponent<Targetable>() != null)
         {
-            
+            targetImage = Instantiate(targetImagePrefab, Camera.main.WorldToScreenPoint(hit.collider.transform.position), Quaternion.identity, canvas.transform);
         }
     }
 }

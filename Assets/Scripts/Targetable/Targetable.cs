@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Targetable : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
 
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        var proyectile = other.GetComponent<ProyectileController>();
+        if (proyectile != null)
+        {
+            Debug.Log("Death");
+            Destroy(proyectile.gameObject);
+        }
     }
 }

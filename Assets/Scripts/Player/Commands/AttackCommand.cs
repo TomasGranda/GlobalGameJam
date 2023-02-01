@@ -18,8 +18,11 @@ public class AttackCommand : Command
 
         if (Physics.Raycast(ray, out hit, 2000))
         {
-            var direction = hit.point - transform.position;
-            GameObject.Instantiate(controller.model.proyectilePrefab, transform.position, Quaternion.LookRotation(direction.normalized, Vector3.up));
+            if (hit.transform.GetComponent<Targetable>() != null)
+            {
+                var direction = hit.point - transform.position;
+                GameObject.Instantiate(controller.model.proyectilePrefab, transform.position, Quaternion.LookRotation(direction.normalized, Vector3.up));
+            }
         }
 
     }
