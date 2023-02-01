@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EntityStats_1
   m_EditorClassIdentifier: 
   maxLife: 0
-  moveSpeed: 0
+  moveSpeed: 0.5
   rangeVision: 0
   rangeAttack: 0
   limitSound: 0
