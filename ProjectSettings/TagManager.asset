@@ -17,12 +17,12 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Player
   - Floor
   - ClimbableWall
   - Cliff
-  - 
-  - 
+  - Targetable
+  - Bullet
   - 
   - 
   - 

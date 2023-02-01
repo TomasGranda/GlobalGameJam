@@ -20,4 +20,6 @@ public class PlayerModel
     public LayerMask climbableWallLayer;
 
     public LayerMask cliffLayer;
+
+    public ProyectileController proyectilePrefab;
 }

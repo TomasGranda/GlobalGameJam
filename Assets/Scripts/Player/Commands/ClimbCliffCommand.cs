@@ -13,7 +13,7 @@ public class ClimbCliffCommand : Command
 
     public void Execute()
     {
-        transform.position += transform.up * 2 + transform.right * 2;
+        controller.cliffAnimation = true;
     }
 
     public void Reset()
