@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxLife: 0
   moveSpeed: 0.5
-  rangeVision: 0
+  rangeVision: 5
+  angleVision: 45
   rangeAttack: 0
   limitSound: 0

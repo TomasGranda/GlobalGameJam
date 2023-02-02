@@ -13,8 +13,14 @@ public class Entity : MonoBehaviour
     public List<Transform> wayPoints = new List<Transform>();
 
 
-    /////////////////////////////////////////////////////////////////////////////
+    [Header("Detection")]
+    [Tooltip("layer del player")]
+    public LayerMask mask;
+    [Tooltip("layers de los obstaculos ejem : Paredes")]
+    public LayerMask obstacle;
+    public Vector3 target { get; private set; }
 
+    /////////////////////////////////////////////////////////////////////////////
 
     public StateMachine stateMachine = new StateMachine();
     public NavMeshAgent agent { get; private set; }
@@ -61,8 +67,10 @@ public class Entity : MonoBehaviour
 
     public virtual void SetChangeState()
     {
-        stateMachine.Init(patrol);
+        stateMachine.Init(detection);
     }
+
+    #region PATRULLA
 
     public int counterIndex { get; private set; }
 
@@ -80,6 +88,33 @@ public class Entity : MonoBehaviour
             }
         }
     }
+
+    #endregion
+
+    #region Cono Vision
+    public bool isOnVision()
+    {
+        var countCollision = Physics.OverlapSphere(transform.position, stats.rangeVision, mask);
+
+        if (countCollision.Length > 0)
+        {
+            var playerPosition = countCollision[0].transform;
+
+            target = playerPosition.position;
+
+            RaycastHit hit;
+
+            if (!Physics.Raycast(transform.position, target - transform.position, out hit, Vector3.Distance(transform.position, target), obstacle))
+            {
+                var angle = Vector3.Angle(target - transform.position, transform.forward);
+
+                return angle < stats.angleVision;
+            }
+        }
+
+        return false;
+    }
+    #endregion
 
     private void OnDrawGizmos()
     {
@@ -105,5 +140,16 @@ public class Entity : MonoBehaviour
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        Gizmos.color = Color.green;
+
+        Gizmos.DrawWireSphere(transform.position, stats.rangeVision);
+
+
+        Gizmos.color = Color.cyan;
+
+        Gizmos.DrawRay(transform.position, Quaternion.Euler(0, stats.angleVision, 0) * transform.forward * stats.rangeVision);
+
+        Gizmos.DrawRay(transform.position, Quaternion.Euler(0, -stats.angleVision, 0) * transform.forward * stats.rangeVision);
     }
 }
