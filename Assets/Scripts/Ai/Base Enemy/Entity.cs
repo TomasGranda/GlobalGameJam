@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Entity : MonoBehaviour
+public class Entity : MonoBehaviour, IDetectionSound
 {
     [Header("Parameters")]
     public EntityStats stats;
@@ -14,7 +14,7 @@ public class Entity : MonoBehaviour
 
     [Tooltip("El NPC tiene que volver por donde vino o tiene que hacer un giro")]
     public bool isLoopPath;
-    
+
 
     [Header("Detection")]
     [Tooltip("layer del player")]
@@ -152,7 +152,7 @@ public class Entity : MonoBehaviour
 
     public bool isDetectedSound { get; private set; }
 
-    public void DetectCollisionSound(float rangeSound)
+    public void DetectCollisionSound()
     {
         isDetectedSound = true;
     }
