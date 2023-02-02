@@ -121,6 +121,13 @@ public class Entity : MonoBehaviour
     }
     #endregion
 
+    #region 
+    public void DetectCollisionSound(float rangeSound)
+    {
+        Debug.Log(rangeSound);
+    }
+    #endregion
+
     private void OnDrawGizmosSelected()
     {
         if (wayPoints.Count > 0)
