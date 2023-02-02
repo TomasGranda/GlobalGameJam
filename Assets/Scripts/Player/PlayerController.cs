@@ -59,7 +59,6 @@ public class PlayerController : MonoBehaviour
         {
             commands.ExecuteCommands();
 
-
             // Gravity
             if (!IsOnClimb())
             {

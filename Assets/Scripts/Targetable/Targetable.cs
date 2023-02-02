@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Targetable : MonoBehaviour
 {
+    public List<TargetablePoint> targetablePoints = new List<TargetablePoint>();
 
     private void OnTriggerEnter(Collider other)
     {
