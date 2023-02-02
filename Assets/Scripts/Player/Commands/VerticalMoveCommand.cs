@@ -35,6 +35,6 @@ public class VerticalMoveCommand : Command
 
     public bool ShouldExecute()
     {
-        return !controller.IsOnClimb() && (controller.GetDownButtonDown() || controller.GetUpButtonDown());
+        return !controller.IsOnClimb() && controller.isOnFloor && (controller.GetDownButtonDown() || controller.GetUpButtonDown());
     }
 }
