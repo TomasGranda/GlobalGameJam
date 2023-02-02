@@ -15,7 +15,6 @@ public class Entity : MonoBehaviour, IDetectionSound
     [Tooltip("El NPC tiene que volver por donde vino o tiene que hacer un giro")]
     public bool isLoopPath;
 
-
     [Header("Detection")]
     [Tooltip("layer del player")]
     public LayerMask playerMask;
@@ -32,10 +31,10 @@ public class Entity : MonoBehaviour, IDetectionSound
 
     #region States
     private IdleState idle;
-    private FollowPlayerState move;
+    private FollowPlayerState followPlayer;
     private AttackState attack;
     private PatrolState patrol;
-    private FollowSoundState detection;
+    private FollowSoundState followSound;
     private DeathState death;
     #endregion
 
@@ -57,12 +56,12 @@ public class Entity : MonoBehaviour, IDetectionSound
         agent = GetComponent<NavMeshAgent>();
 
         idle = new IdleState(this);
-        move = new FollowPlayerState(this);
+        followPlayer = new FollowPlayerState(this);
 
         attack = new AttackState(this);
 
         patrol = new PatrolState(this);
-        detection = new FollowSoundState(this);
+        followSound = new FollowSoundState(this);
 
         death = new DeathState(this);
 
@@ -78,12 +77,19 @@ public class Entity : MonoBehaviour, IDetectionSound
     public virtual void SetChangeState()
     {
         idle.AddTransition(patrol);
-        idle.AddTransition(detection);
+        idle.AddTransition(followSound);
+        idle.AddTransition(followPlayer);
+        idle.AddTransition(attack);
         idle.AddTransition(death);
 
-        move.AddTransition(idle);
-        move.AddTransition(detection);
-        move.AddTransition(death);
+        followPlayer.AddTransition(idle);
+        followPlayer.AddTransition(attack);
+        followPlayer.AddTransition(death);
+
+        patrol.AddTransition(idle);
+        patrol.AddTransition(followSound);
+        patrol.AddTransition(followPlayer);
+        patrol.AddTransition(death);
 
         attack.AddTransition(idle);
 
@@ -154,7 +160,7 @@ public class Entity : MonoBehaviour, IDetectionSound
 
     public void DetectCollisionSound(Vector3 target)
     {
-        isDetectedSound = true;
+        stateMachine.Transition<FollowSoundState>(target);
     }
 
     #endregion
