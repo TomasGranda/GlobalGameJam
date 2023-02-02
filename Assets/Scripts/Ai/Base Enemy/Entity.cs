@@ -37,8 +37,13 @@ public class Entity : MonoBehaviour
     #region Custom Gizmo
 
     [Header("Settings Gizmo")]
-    [Tooltip("Cambia el color de la linea de patrulla")]
+    [Tooltip("Cambia el color de las Flechas que señalan el camino de patrullaje")]
     public Color colorLine = new Color(0, 0, 0, 1);
+
+    [Tooltip("Cambia el Color de la esfera de vision")]
+    public Color colorSphere = new Color(0, 0, 0, 1);
+    [Tooltip("Cambia el color de las lineas limites de vision")]
+    public Color colorLimitVision = new Color(0, 0, 0, 1);
 
     #endregion
 
@@ -70,7 +75,7 @@ public class Entity : MonoBehaviour
         stateMachine.Init(detection);
     }
 
-    #region PATRULLA
+    #region Path
 
     public int counterIndex { get; private set; }
 
@@ -116,7 +121,7 @@ public class Entity : MonoBehaviour
     }
     #endregion
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         if (wayPoints.Count > 0)
         {
@@ -141,15 +146,18 @@ public class Entity : MonoBehaviour
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
-        Gizmos.color = Color.green;
+
+        Gizmos.color = colorSphere;
 
         Gizmos.DrawWireSphere(transform.position, stats.rangeVision);
 
-
-        Gizmos.color = Color.cyan;
+        Gizmos.color = colorLimitVision;
 
         Gizmos.DrawRay(transform.position, Quaternion.Euler(0, stats.angleVision, 0) * transform.forward * stats.rangeVision);
 
         Gizmos.DrawRay(transform.position, Quaternion.Euler(0, -stats.angleVision, 0) * transform.forward * stats.rangeVision);
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+
     }
 }
