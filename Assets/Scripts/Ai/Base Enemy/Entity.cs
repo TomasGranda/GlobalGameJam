@@ -152,7 +152,7 @@ public class Entity : MonoBehaviour, IDetectionSound
 
     public bool isDetectedSound { get; private set; }
 
-    public void DetectCollisionSound()
+    public void DetectCollisionSound(Vector3 target)
     {
         isDetectedSound = true;
     }

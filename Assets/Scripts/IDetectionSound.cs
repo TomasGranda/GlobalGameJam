@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IDetectionSound
 {
-    public void DetectCollisionSound() { }
+    public void DetectCollisionSound(Vector3 position) { }
 }

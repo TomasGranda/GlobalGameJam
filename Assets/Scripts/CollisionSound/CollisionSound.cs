@@ -19,7 +19,7 @@ public class CollisionSound : MonoBehaviour
 
             if (collisionTarget != null)
             {
-                collisionTarget.DetectCollisionSound();
+                collisionTarget.DetectCollisionSound(transform.position);
             }
         }
     }
