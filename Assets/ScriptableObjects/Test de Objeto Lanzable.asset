@@ -9,12 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 714f7eacea06f314abf8d3eaf06fd63d, type: 3}
-  m_Name: EntityStats_1
+  m_Script: {fileID: 11500000, guid: d0bf8dc9e40910247aa24aef4d9ceefc, type: 3}
+  m_Name: Test de Objeto Lanzable
   m_EditorClassIdentifier: 
-  maxLife: 0
-  moveSpeed: 0.5
-  rangeVision: 5
-  angleVision: 45
-  rangeAttack: 0
-  limitSound: 0
+  maximumSound: 5
+  soundArea: 5
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1

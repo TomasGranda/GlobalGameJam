@@ -13,6 +13,7 @@ public class EntityStats : ScriptableObject
 
     [Header("Rango de vision")]
     public float rangeVision;
+    public float angleVision;
 
     [Header("Rango de Ataque")]
     public float rangeAttack;

@@ -11,18 +11,18 @@ public class DetectionState : BaseStateMachineState
         this.controller = controller;
     }
 
-    public override void ExecuteState()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override void OnEnterState(params object[] objects)
     {
-        throw new System.NotImplementedException();
+
+    }
+
+    public override void ExecuteState()
+    {
+        
     }
 
     public override void OnExitState()
     {
-        throw new System.NotImplementedException();
+
     }
 }
