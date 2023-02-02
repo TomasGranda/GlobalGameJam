@@ -22,4 +22,8 @@ public class PlayerModel
     public LayerMask cliffLayer;
 
     public ProyectileController proyectilePrefab;
+
+    public int verticalMovementStepSize;
+
+    public int maxVerticalSteps = 0;
 }

@@ -164,6 +164,8 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 16384
     proyectilePrefab: {fileID: -8755954737203338987, guid: b01774e57aa9ffb49b273de0e5d1216f, type: 3}
+    verticalMovementStepSize: 2
+    maxVerticalSteps: 3
   inputAsset: {fileID: -944628639613478452, guid: 5316723040cb03e418ca8edeb6d2233f, type: 3}
   debug: 0
   isClimbing: 0

@@ -22,6 +22,6 @@ public class LeaveCliffCommand : Command
 
     public bool ShouldExecute()
     {
-        return controller.GetLeaveCliffButtonDown() && controller.isOnCliff;
+        return controller.GetDownButtonDown() && controller.isOnCliff;
     }
 }

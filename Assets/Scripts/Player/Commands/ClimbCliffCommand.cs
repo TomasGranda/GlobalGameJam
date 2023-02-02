@@ -22,6 +22,6 @@ public class ClimbCliffCommand : Command
 
     public bool ShouldExecute()
     {
-        return controller.GetClimbCliffButtonDown() && controller.isOnCliff;
+        return controller.GetUpButtonDown() && controller.isOnCliff;
     }
 }
