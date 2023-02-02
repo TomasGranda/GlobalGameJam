@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DetectionState : BaseStateMachineState
+public class FollowSoundState : BaseStateMachineState
 {
     private readonly Entity controller;
 
-    public DetectionState(Entity controller)
+    public FollowSoundState(Entity controller)
     {
         this.controller = controller;
     }

@@ -19,27 +19,26 @@ public class Steerings
     public static Vector3 Evade(Transform Origin, float range, Vector3 Target)
     {
         Vector3 desired_direction = new Vector3();
+
         Vector3 moveVector;
 
         desired_direction = Origin.position - Target;
 
         if (desired_direction.magnitude < range)
         {
-
             moveVector = desired_direction.normalized;
 
             Debug.DrawRay(Origin.position, moveVector, Color.magenta);
-            return moveVector;
 
+            return moveVector;
         }
         else
         {
-
             return Vector3.zero;
         }
     }
 
-    public static Vector3 Separate(Transform Origin, List<Transform> Targets)
+    public static Vector3 Separates(Transform Origin, List<Transform> Targets)
     {
         Vector3 desired_direction = new Vector3();
 
@@ -55,7 +54,6 @@ public class Steerings
             {
                 if (Vector3.Distance(Origin.position, neighbor.position) < radius)
                 {
-
                     desired_direction = neighbor.position - Origin.position;
 
                     float scale = desired_direction.magnitude / (float)Mathf.Sqrt(radius);
@@ -70,6 +68,34 @@ public class Steerings
         moveVector /= Targets.Count;
 
         moveVector *= -1;
+        return moveVector;
+    }
+
+    public static Vector3 Separate(Transform Origin, Vector3 Target)
+    {
+        Vector3 desired_direction = new Vector3();
+
+        Vector3 moveVector;
+
+        float radius = 4f;
+
+        moveVector = desired_direction;
+
+        if (Target != null)
+        {
+            if (Vector3.Distance(Origin.position, Target) < radius)
+            {
+                desired_direction = Target - Origin.position;
+
+                float scale = desired_direction.magnitude / (float)Mathf.Sqrt(radius);
+
+                Debug.DrawRay(Origin.position, desired_direction / scale, Color.blue);
+
+                moveVector += desired_direction / scale;
+            }
+        }
+        moveVector *= -1;
+
         return moveVector;
     }
 

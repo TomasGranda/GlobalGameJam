@@ -6,23 +6,47 @@ public class IdleState : BaseStateMachineState
 {
     private readonly Entity controller;
 
+    private float timeExitState = 5;
+    private float counterTime;
+
     public IdleState(Entity controller)
     {
         this.controller = controller;
     }
 
-    public override void ExecuteState()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override void OnEnterState(params object[] objects)
     {
-        throw new System.NotImplementedException();
+        counterTime = timeExitState;
+    }
+
+    public override void ExecuteState()
+    {
+        counterTime -= Time.deltaTime;
+
+        if (counterTime <= 0)
+        {
+            controller.stateMachine.Transition<PatrolState>();
+        }
     }
 
     public override void OnExitState()
     {
-        throw new System.NotImplementedException();
+
+    }
+
+    public void ChangeViewPlayer()
+    {
+        if (controller.isOnVision())
+        {
+            controller.stateMachine.Transition<FollowPlayerState>();
+        }
+    }
+
+    public void ChangeDetectionSound()
+    {
+        if (controller.isDetectedSound)
+        {
+            controller.stateMachine.Transition<FollowSoundState>();
+        }
     }
 }

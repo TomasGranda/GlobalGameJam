@@ -22,10 +22,9 @@ public class CollisionSound : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.black;
-
         Gizmos.DrawWireSphere(transform.position, throwableObjects.soundArea);
     }
 }
