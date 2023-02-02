@@ -7,11 +7,14 @@ public class VerticalMoveCommand : Command
 
     private PlayerModel model;
 
+    private float initialZPosition;
+
     public VerticalMoveCommand(PlayerController controller)
     {
         this.controller = controller;
         this.transform = controller.transform;
         this.model = controller.model;
+        this.initialZPosition = transform.position.z;
     }
 
     public void Execute()
@@ -20,11 +23,9 @@ public class VerticalMoveCommand : Command
         if (controller.GetDownButtonDown()) movement--;
         if (controller.GetUpButtonDown()) movement++;
 
-        Vector3 movementVector = Vector3.forward * movement * controller.model.verticalMovementStepSize;
+        Debug.Log(movement);
 
-        if (transform.position.z + movementVector.z > controller.model.maxVerticalSteps * model.verticalMovementStepSize
-            || transform.position.z + movementVector.z < 0)
-            movementVector.z = 0;
+        Vector3 movementVector = Vector3.back * movement * controller.model.verticalMovementStepSize;
 
         controller.characterController.Move(movementVector);
     }
