@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class CameraController : MonoBehaviour
 {
@@ -28,16 +29,11 @@ public class CameraController : MonoBehaviour
         Destroy(targetImage);
         targetImage = null;
 
-        var newPosition = new Vector3(initialPosition.x + player.position.x, initialPosition.y, initialPosition.z);
+        Vector3 newPosition = new Vector3(initialPosition.x + player.position.x, initialPosition.y, initialPosition.z);
         transform.position = newPosition;
 
-        // TODO: Change to New Input System
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, 2000) && hit.collider.transform.GetComponent<Targetable>() != null)
-        {
-            targetImage = Instantiate(targetImagePrefab, Camera.main.WorldToScreenPoint(hit.collider.transform.position), Quaternion.identity, canvas.transform);
-        }
+        TargetablePoint target = Utils.GetTargetPoint();
+        if (target != null)
+            targetImage = GameObject.Instantiate(targetImagePrefab, Camera.main.WorldToScreenPoint(target.transform.position), Quaternion.identity, canvas.transform);
     }
 }

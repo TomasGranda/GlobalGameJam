@@ -13,18 +13,12 @@ public class AttackCommand : Command
 
     public void Execute()
     {
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, 2000))
+        TargetablePoint target = Utils.GetTargetPoint();
+        if (target != null)
         {
-            if (hit.transform.GetComponent<Targetable>() != null)
-            {
-                var direction = hit.point - transform.position;
-                GameObject.Instantiate(controller.model.proyectilePrefab, transform.position, Quaternion.LookRotation(direction.normalized, Vector3.up));
-            }
+            var direction = target.transform.position - transform.position;
+            GameObject.Instantiate(controller.model.proyectilePrefab, transform.position, Quaternion.LookRotation(direction.normalized, Vector3.up));
         }
-
     }
 
     public void Reset()

@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
         commands = new Commands();
 
         MoveCommand moveCommand = new MoveCommand(this);
+        VerticalMoveCommand verticalMoveCommand = new VerticalMoveCommand(this);
         JumpCommand jumpCommand = new JumpCommand(this);
         ClimbCommand climbCommand = new ClimbCommand(this);
         ClimbCliffCommand climbCliffCommand = new ClimbCliffCommand(this);
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour
         commands.AddCommand(climbCliffCommand);
         commands.AddCommand(leaveCliffCommand);
         commands.AddCommand(moveCommand);
+        commands.AddCommand(verticalMoveCommand);
         commands.AddCommand(jumpCommand);
         commands.AddCommand(attackCommand);
     }
@@ -58,7 +60,6 @@ public class PlayerController : MonoBehaviour
         if (!cliffAnimation)
         {
             commands.ExecuteCommands();
-
 
             // Gravity
             if (!IsOnClimb())
@@ -133,14 +134,14 @@ public class PlayerController : MonoBehaviour
         return inputAsset.FindAction("Shoot").WasPressedThisFrame();
     }
 
-    public bool GetClimbCliffButtonDown()
+    public bool GetUpButtonDown()
     {
-        return inputAsset.FindAction("ClimbCliff").WasPressedThisFrame();
+        return inputAsset.FindAction("UpButton").WasPressedThisFrame();
     }
 
-    public bool GetLeaveCliffButtonDown()
+    public bool GetDownButtonDown()
     {
-        return inputAsset.FindAction("LeaveCliff").WasPressedThisFrame();
+        return inputAsset.FindAction("DownButton").WasPressedThisFrame();
     }
     #endregion
 
