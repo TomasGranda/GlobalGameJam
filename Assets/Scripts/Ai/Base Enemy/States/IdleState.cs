@@ -37,20 +37,20 @@ public class IdleState : BaseStateMachineState
 
         if (counterTime <= 0)
         {
-            controller.wayPoints.Reverse();
+            controller.transform.rotation = Quaternion.Slerp(controller.transform.rotation, Quaternion.LookRotation(controller.wayPoints[controller.wayPoints.Count - 2].transform.position - controller.transform.position), 2 * Time.deltaTime);
 
-            // controller.transform.rotation = Quaternion.AngleAxis(0, controller.wayPoints[1].transform.position - controller.transform.position);
+            var angle = Vector3.Angle(controller.wayPoints[controller.wayPoints.Count - 2].transform.position - controller.transform.position, controller.transform.forward);
 
-            // var angle = Vector3.Angle(controller.wayPoints[1].transform.position - controller.transform.position, controller.transform.forward);
+            Debug.Log(angle);
 
-            // Debug.Log(angle);
+            if (angle <= 5)
+            {
+                controller.wayPoints.Reverse();
 
-            // if (angle <= 1)
-            // {
                 controller.isWaiting = false;
 
                 controller.stateMachine.Transition<PatrolState>();
-            // }
+            }
         }
     }
 
