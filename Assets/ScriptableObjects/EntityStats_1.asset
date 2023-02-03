@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxLife: 0
   minMoveSpeed: 1
-  maxMoveSpeed: 2
+  maxMoveSpeed: 5
   minRotateSpeed: 1
   maxRotateSpeed: 2
   rangeVision: 5

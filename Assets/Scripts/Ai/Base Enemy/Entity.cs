@@ -105,11 +105,11 @@ public class Entity : MonoBehaviour, IDetectionSound
     {
         if (counterIndex <= wayPoints.Count - 1)
         {
-            // agent.SetDestination(wayPoints[counterIndex].position);
+            agent.SetDestination(wayPoints[counterIndex].position);
 
-            var moveSpeedV = Mathf.Clamp(Vector3.Distance(transform.position, wayPoints[counterIndex].transform.position), stats.minMoveSpeed, stats.maxMoveSpeed);
+            // var moveSpeedV = Mathf.Clamp(Vector3.Distance(transform.position, wayPoints[counterIndex].transform.position), stats.minMoveSpeed, stats.maxMoveSpeed);
 
-            transform.position += transform.forward.normalized * moveSpeedV * Time.deltaTime;
+            // transform.position += transform.forward.normalized * moveSpeedV * Time.deltaTime;
 
             var rotateSpeedV = Mathf.Clamp(Vector3.Distance(transform.position, wayPoints[counterIndex].transform.position), stats.minRotateSpeed, stats.maxRotateSpeed);
 
