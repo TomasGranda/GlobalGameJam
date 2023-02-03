@@ -93,11 +93,13 @@ public class Entity : MonoBehaviour, IDetectionSound
 
         attack.AddTransition(idle);
 
-        stateMachine.Init(idle);
+        stateMachine.Init(patrol);
     }
 
     #region FollowPath
-    public int counterIndex { get; private set; }
+    public int counterIndex { get; set; }
+
+    public bool isWaiting { get; set; }
 
     public void FollowPath()
     {
@@ -121,7 +123,11 @@ public class Entity : MonoBehaviour, IDetectionSound
         else
         {
             if (!isLoopPath)
-                wayPoints.Reverse();
+            {
+                isWaiting = true;
+
+                stateMachine.Transition<IdleState>();
+            }
 
             counterIndex = 0;
         }

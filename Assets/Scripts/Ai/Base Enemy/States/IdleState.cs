@@ -21,12 +21,7 @@ public class IdleState : BaseStateMachineState
 
     public override void ExecuteState()
     {
-        counterTime -= Time.deltaTime;
-
-        if (counterTime <= 0)
-        {
-            controller.stateMachine.Transition<PatrolState>();
-        }
+        Waiting();
     }
 
     public override void OnExitState()
@@ -34,7 +29,32 @@ public class IdleState : BaseStateMachineState
 
     }
 
-    public void ChangeViewPlayer()
+    private void Waiting()
+    {
+        if (!controller.isWaiting) return;
+
+        counterTime -= Time.deltaTime;
+
+        if (counterTime <= 0)
+        {
+            controller.wayPoints.Reverse();
+
+            // controller.transform.rotation = Quaternion.AngleAxis(0, controller.wayPoints[1].transform.position - controller.transform.position);
+
+            // var angle = Vector3.Angle(controller.wayPoints[1].transform.position - controller.transform.position, controller.transform.forward);
+
+            // Debug.Log(angle);
+
+            // if (angle <= 1)
+            // {
+                controller.isWaiting = false;
+
+                controller.stateMachine.Transition<PatrolState>();
+            // }
+        }
+    }
+
+    private void ChangeViewPlayer()
     {
         if (controller.isOnVision())
         {
@@ -42,7 +62,7 @@ public class IdleState : BaseStateMachineState
         }
     }
 
-    public void ChangeDetectionSound()
+    private void ChangeDetectionSound()
     {
         if (controller.isDetectedSound)
         {
