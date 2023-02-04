@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PatrolState : BaseStateMachineState
 {
-    private readonly Entity controller;
+    private readonly Enemy controller;
 
-    public PatrolState(Entity controller)
+    public PatrolState(Enemy controller)
     {
         this.controller = controller;
     }

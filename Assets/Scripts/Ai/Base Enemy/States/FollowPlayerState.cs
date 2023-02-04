@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class FollowPlayerState : BaseStateMachineState
 {
-    private readonly Entity controller;
+    private readonly Enemy controller;
 
-    public FollowPlayerState(Entity controller)
+    public FollowPlayerState(Enemy controller)
     {
         this.controller = controller;
     }
