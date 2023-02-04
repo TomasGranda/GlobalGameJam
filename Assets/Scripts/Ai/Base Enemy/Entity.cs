@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Entity : MonoBehaviour
+public class Entity : MonoBehaviour, IDetectionSound
 {
     [Header("Parameters")]
     public EntityStats stats;
@@ -12,12 +12,16 @@ public class Entity : MonoBehaviour
     [Header("Ruta")]
     public List<Transform> wayPoints = new List<Transform>();
 
+    [Tooltip("El NPC tiene que volver por donde vino o tiene que hacer un giro")]
+    public bool isLoopPath;
 
     [Header("Detection")]
     [Tooltip("layer del player")]
-    public LayerMask mask;
+    public LayerMask playerMask;
+
     [Tooltip("layers de los obstaculos ejem : Paredes")]
-    public LayerMask obstacle;
+    public LayerMask obstacleMask;
+
     public Vector3 target { get; private set; }
 
     /////////////////////////////////////////////////////////////////////////////
@@ -27,10 +31,10 @@ public class Entity : MonoBehaviour
 
     #region States
     private IdleState idle;
-    private MoveState move;
+    private FollowPlayerState followPlayer;
     private AttackState attack;
     private PatrolState patrol;
-    private DetectionState detection;
+    private FollowSoundState followSound;
     private DeathState death;
     #endregion
 
@@ -52,12 +56,12 @@ public class Entity : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
 
         idle = new IdleState(this);
-        move = new MoveState(this);
+        followPlayer = new FollowPlayerState(this);
 
         attack = new AttackState(this);
 
         patrol = new PatrolState(this);
-        detection = new DetectionState(this);
+        followSound = new FollowSoundState(this);
 
         death = new DeathState(this);
 
@@ -72,25 +76,60 @@ public class Entity : MonoBehaviour
 
     public virtual void SetChangeState()
     {
-        stateMachine.Init(detection);
+        idle.AddTransition(patrol);
+        idle.AddTransition(followSound);
+        idle.AddTransition(followPlayer);
+        idle.AddTransition(attack);
+        idle.AddTransition(death);
+
+        followPlayer.AddTransition(idle);
+        followPlayer.AddTransition(attack);
+        followPlayer.AddTransition(death);
+
+        patrol.AddTransition(idle);
+        patrol.AddTransition(followSound);
+        patrol.AddTransition(followPlayer);
+        patrol.AddTransition(death);
+
+        attack.AddTransition(idle);
+
+        stateMachine.Init(patrol);
     }
 
-    #region Path
+    #region FollowPath
+    public int counterIndex { get; set; }
 
-    public int counterIndex { get; private set; }
+    public bool isWaiting { get; set; }
 
     public void FollowPath()
     {
         if (counterIndex <= wayPoints.Count - 1)
         {
-            transform.position += transform.forward * stats.moveSpeed * Time.deltaTime;
+            agent.SetDestination(wayPoints[counterIndex].position);
 
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(wayPoints[counterIndex].transform.position - transform.position), 1 * Time.deltaTime);
+            // var moveSpeedV = Mathf.Clamp(Vector3.Distance(transform.position, wayPoints[counterIndex].transform.position), stats.minMoveSpeed, stats.maxMoveSpeed);
 
-            if (Vector3.Distance(transform.position, wayPoints[counterIndex].transform.position) < 1f)
+            // transform.position += transform.forward.normalized * moveSpeedV * Time.deltaTime;
+
+            var rotateSpeedV = Mathf.Clamp(Vector3.Distance(transform.position, wayPoints[counterIndex].transform.position), stats.minRotateSpeed, stats.maxRotateSpeed);
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((wayPoints[counterIndex].transform.position - transform.position).normalized), rotateSpeedV * Time.deltaTime);
+
+            if (Vector3.Distance(transform.position, wayPoints[counterIndex].transform.position) < 2f)
             {
                 counterIndex++;
             }
+        }
+        else
+        {
+            if (!isLoopPath)
+            {
+                isWaiting = true;
+
+                stateMachine.Transition<IdleState>();
+            }
+
+            counterIndex = 0;
         }
     }
 
@@ -99,7 +138,7 @@ public class Entity : MonoBehaviour
     #region Cono Vision
     public bool isOnVision()
     {
-        var countCollision = Physics.OverlapSphere(transform.position, stats.rangeVision, mask);
+        var countCollision = Physics.OverlapSphere(transform.position, stats.rangeVision, playerMask);
 
         if (countCollision.Length > 0)
         {
@@ -109,7 +148,7 @@ public class Entity : MonoBehaviour
 
             RaycastHit hit;
 
-            if (!Physics.Raycast(transform.position, target - transform.position, out hit, Vector3.Distance(transform.position, target), obstacle))
+            if (!Physics.Raycast(transform.position, target - transform.position, out hit, Vector3.Distance(transform.position, target), obstacleMask))
             {
                 var angle = Vector3.Angle(target - transform.position, transform.forward);
 
@@ -121,14 +160,18 @@ public class Entity : MonoBehaviour
     }
     #endregion
 
-    #region 
-    public void DetectCollisionSound(float rangeSound)
+    #region Detector Sound
+
+    public bool isDetectedSound { get; private set; }
+
+    public void DetectCollisionSound(Vector3 target)
     {
-        Debug.Log(rangeSound);
+        stateMachine.Transition<FollowSoundState>(target);
     }
+
     #endregion
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         if (wayPoints.Count > 0)
         {

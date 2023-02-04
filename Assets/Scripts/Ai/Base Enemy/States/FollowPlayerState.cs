@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveState : BaseStateMachineState
+public class FollowPlayerState : BaseStateMachineState
 {
     private readonly Entity controller;
 
-    public MoveState(Entity controller)
+    public FollowPlayerState(Entity controller)
     {
         this.controller = controller;
     }
 
-    public override void ExecuteState()
+    public override void OnEnterState(params object[] objects)
     {
         throw new System.NotImplementedException();
     }
 
-    public override void OnEnterState(params object[] objects)
+    public override void ExecuteState()
     {
         throw new System.NotImplementedException();
     }

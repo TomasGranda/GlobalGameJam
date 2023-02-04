@@ -13,19 +13,20 @@ public class CollisionSound : MonoBehaviour
 
         foreach (var player in players)
         {
-            var soundProvoked = throwableObjects.maximumSound * ((player.transform.position - transform.position).magnitude / throwableObjects.soundArea);
+            // var soundProvoked = throwableObjects.maximumSound * ((player.transform.position - transform.position).magnitude / throwableObjects.soundArea);
 
-            if (player.GetComponent<Entity>())
+            var collisionTarget = player.GetComponent<IDetectionSound>();
+
+            if (collisionTarget != null)
             {
-                player.GetComponent<Entity>().DetectCollisionSound(soundProvoked);
+                collisionTarget.DetectCollisionSound(transform.position);
             }
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.black;
-
         Gizmos.DrawWireSphere(transform.position, throwableObjects.soundArea);
     }
 }

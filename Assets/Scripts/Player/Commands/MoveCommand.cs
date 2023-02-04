@@ -14,6 +14,7 @@ public class MoveCommand : Command
     public void Execute()
     {
         var movement = controller.GetMovementVector();
+        movement.z = 0;
 
         controller.characterController.Move(movement * controller.model.speed * Time.deltaTime);
     }

@@ -33,7 +33,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "ClimbCliff",
+                    "name": "UpButton",
                     "type": "Button",
                     "id": "2083ef5f-0327-40e4-b705-59f59810f127",
                     "expectedControlType": "Button",
@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "LeaveCliff",
+                    "name": "DownButton",
                     "type": "Button",
                     "id": "aeda950f-2369-43ad-85df-0ba0d0121bfa",
                     "expectedControlType": "Button",
@@ -167,7 +167,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "ClimbCliff",
+                    "action": "UpButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -178,7 +178,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "LeaveCliff",
+                    "action": "DownButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

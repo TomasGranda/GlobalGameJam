@@ -15,4 +15,9 @@ public class Targetable : MonoBehaviour
             Destroy(proyectile.gameObject);
         }
     }
+
+    public virtual void OnDeath()
+    {
+
+    }
 }

@@ -9,7 +9,11 @@ public class EntityStats : ScriptableObject
     public float maxLife;
 
     [Header("Velociadad de moviento")]
-    public float moveSpeed;
+    public float minMoveSpeed = 1;
+    public float maxMoveSpeed = 4;
+
+    public float minRotateSpeed = 1;
+    public float maxRotateSpeed = 5;
 
     [Header("Rango de vision")]
     public float rangeVision;
