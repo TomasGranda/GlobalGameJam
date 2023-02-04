@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3500167f3b0642449af0352796552ad4
+guid: 2908ba23eb91a8140b5a6a497755ccd0
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -46,8 +46,8 @@ ModelImporter:
     importLights: 1
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
-    swapUVChannels: 1
-    generateSecondaryUV: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
@@ -75,7 +75,12 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  referencedClips: []
+  referencedClips:
+  - 37e0788c59fb23f4d80acd044dc66e1c
+  - 5aa2ceda243f8c64fa4b27e01d269d0d
+  - 5201562a3fd72c04396ec51696833295
+  - 9571e10690dcd414980392af51696d4d
+  - 9bfab7f0e54ab0742a3a043805d7fa63
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
