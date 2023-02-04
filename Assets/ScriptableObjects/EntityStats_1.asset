@@ -16,7 +16,7 @@ MonoBehaviour:
   minMoveSpeed: 1
   maxMoveSpeed: 5
   minRotateSpeed: 1
-  maxRotateSpeed: 2
+  maxRotateSpeed: 6
   rangeVision: 5
   angleVision: 45
   rangeAttack: 0

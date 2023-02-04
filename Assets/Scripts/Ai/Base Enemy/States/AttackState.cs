@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class AttackState : BaseStateMachineState
 {
-    private readonly Entity controller;
+    private readonly Enemy controller;
 
-    public AttackState(Entity controller)
+    public AttackState(Enemy controller)
     {
         this.controller = controller;
     }
