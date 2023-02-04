@@ -26,4 +26,7 @@ public class EntityStats : ScriptableObject
 
     [Header("Tiempo fuera de Vision")]
     public float TimeOutofVision = 1;
+
+    [Header("Rango de Busqueda")]
+    public float rangeShearing;
 }
