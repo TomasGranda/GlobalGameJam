@@ -20,10 +20,14 @@ public class FollowSoundState : BaseStateMachineState
 
     public override void ExecuteState()
     {
-        if (Vector3.Distance(controller.transform.position, target) > controller.stats.rangeShearing)
+        if (Vector3.Distance(controller.transform.position, target) > controller.stats.searchRange)
         {
             controller.RotateTargetPlayer();
             controller.FollowTarget(target);
+        }
+        else
+        {
+            controller.stateMachine.Transition<SearchState>();
         }
     }
 

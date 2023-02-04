@@ -20,3 +20,5 @@ MonoBehaviour:
   angleVision: 45
   rangeAttack: 5
   limitSound: 0
+  TimeOutofVision: 1
+  rangeShearing: 10

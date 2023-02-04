@@ -35,6 +35,7 @@ public class Enemy : MonoBehaviour, IDetectionSound
     private AttackState attack;
     private PatrolState patrol;
     private FollowSoundState followSound;
+    private SearchState search;
     private DeathState death;
     #endregion
 
@@ -78,12 +79,10 @@ public class Enemy : MonoBehaviour, IDetectionSound
 
         idle = new IdleState(this);
         followPlayer = new FollowPlayerState(this);
-
         attack = new AttackState(this);
-
         patrol = new PatrolState(this);
         followSound = new FollowSoundState(this);
-
+        search = new SearchState(this);
         death = new DeathState(this);
 
         SetChangeState();
@@ -113,6 +112,7 @@ public class Enemy : MonoBehaviour, IDetectionSound
         followSound.AddTransition(attack);
         followSound.AddTransition(patrol);
         followSound.AddTransition(idle);
+        followSound.AddTransition(search);
         followSound.AddTransition(death);
 
         patrol.AddTransition(idle);
@@ -122,6 +122,11 @@ public class Enemy : MonoBehaviour, IDetectionSound
 
         attack.AddTransition(idle);
         attack.AddTransition(followPlayer);
+
+        search.AddTransition(patrol);
+        search.AddTransition(followPlayer);
+        search.AddTransition(followSound);
+        search.AddTransition(death);
 
         stateMachine.Init(patrol);
     }
