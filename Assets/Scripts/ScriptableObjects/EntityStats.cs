@@ -9,8 +9,7 @@ public class EntityStats : ScriptableObject
     public float maxLife;
 
     [Header("Velociadad de moviento")]
-    public float minMoveSpeed = 1;
-    public float maxMoveSpeed = 4;
+    public float moveSpeed = 4;
 
     public float minRotateSpeed = 1;
     public float maxRotateSpeed = 5;
@@ -24,4 +23,7 @@ public class EntityStats : ScriptableObject
 
     [Header("Limite de Deteccion de Sonido")]
     public float limitSound;
+
+    [Header("Tiempo fuera de Vision")]
+    public float TimeOutofVision = 1;
 }

@@ -11,18 +11,18 @@ public class DeathState : BaseStateMachineState
         this.controller = controller;
     }
 
-    public override void ExecuteState()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override void OnEnterState(params object[] objects)
     {
-        throw new System.NotImplementedException();
+        controller.StartCoroutine(controller.DisableObject());
+    }
+
+    public override void ExecuteState()
+    {
+
     }
 
     public override void OnExitState()
     {
-        throw new System.NotImplementedException();
+
     }
 }
