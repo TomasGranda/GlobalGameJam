@@ -19,6 +19,15 @@ public class PatrolState : BaseStateMachineState
     public override void ExecuteState()
     {
         controller.FollowPath();
+
+        if (controller.isOnVision())
+        {
+            controller.stateMachine.Transition<FollowPlayerState>();
+        }
+        else
+        {
+
+        }
     }
 
     public override void OnExitState()
