@@ -20,6 +20,11 @@ public class FollowSoundState : BaseStateMachineState
 
     public override void ExecuteState()
     {
+        if (controller.isOnVision())
+        {
+            controller.stateMachine.Transition<FollowPlayerState>();
+        }
+
         if (Vector3.Distance(controller.transform.position, target) > controller.stats.searchRange)
         {
             controller.RotateTargetPlayer();

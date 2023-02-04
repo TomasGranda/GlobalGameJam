@@ -42,15 +42,22 @@ public class Enemy : MonoBehaviour, IDetectionSound
     #region Custom Gizmo
 
     [Header("Settings Gizmo")]
+    public bool isActiveLine = false;
 
     [Tooltip("Cambia el color de las Flechas que señalan el camino de patrullaje")]
     public Color colorLine = new Color(0, 0, 0, 1);
 
+    public bool isActiveRangeVision = false;
+
     [Tooltip("Cambia el Color de la esfera de vision")]
     public Color colorRangeVision = new Color(0, 0, 0, 1);
 
+    public bool isActiveRangeAttack = false;
+
     [Tooltip("Cambia el Color de la esfera de vision")]
     public Color colorRangeAttack = new Color(0, 0, 0, 1);
+
+    public bool isActiveAngleVision = false;
 
     [Tooltip("Cambia el color de las lineas limites de vision")]
     public Color colorLimitVision = new Color(0, 0, 0, 1);
@@ -109,7 +116,7 @@ public class Enemy : MonoBehaviour, IDetectionSound
         followPlayer.AddTransition(attack);
         followPlayer.AddTransition(death);
 
-        followSound.AddTransition(attack);
+        followSound.AddTransition(followPlayer);
         followSound.AddTransition(patrol);
         followSound.AddTransition(idle);
         followSound.AddTransition(search);
@@ -248,7 +255,13 @@ public class Enemy : MonoBehaviour, IDetectionSound
 
     private void OnDrawGizmos()
     {
-        if (wayPoints.Count > 0)
+        // Gizmos.color = Color.black;
+
+        // Gizmos.DrawSphere(wayPoints[counterIndex].transform.position, .5f);
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+
+        if (wayPoints.Count > 0 && isActiveLine)
         {
             Gizmos.color = colorLine;
 
@@ -272,23 +285,32 @@ public class Enemy : MonoBehaviour, IDetectionSound
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
-        Gizmos.color = colorRangeVision;
+        if (isActiveRangeVision)
+        {
+            Gizmos.color = colorRangeVision;
 
-        Gizmos.DrawWireSphere(transform.position, stats.rangeVision);
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-
-        Gizmos.color = colorRangeAttack;
-
-        Gizmos.DrawWireSphere(transform.position, stats.rangeAttack);
+            Gizmos.DrawWireSphere(transform.position, stats.rangeVision);
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
-        Gizmos.color = colorLimitVision;
+        if (isActiveRangeAttack)
+        {
+            Gizmos.color = colorRangeAttack;
 
-        Gizmos.DrawRay(transform.position, Quaternion.Euler(0, stats.angleVision, 0) * transform.forward * stats.rangeVision);
+            Gizmos.DrawWireSphere(transform.position, stats.rangeAttack);
+        }
 
-        Gizmos.DrawRay(transform.position, Quaternion.Euler(0, -stats.angleVision, 0) * transform.forward * stats.rangeVision);
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+
+        if (isActiveAngleVision)
+        {
+            Gizmos.color = colorLimitVision;
+
+            Gizmos.DrawRay(transform.position, Quaternion.Euler(0, stats.angleVision, 0) * transform.forward * stats.rangeVision);
+
+            Gizmos.DrawRay(transform.position, Quaternion.Euler(0, -stats.angleVision, 0) * transform.forward * stats.rangeVision);
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
 

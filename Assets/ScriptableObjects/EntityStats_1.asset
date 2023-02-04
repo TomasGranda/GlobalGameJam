@@ -21,4 +21,4 @@ MonoBehaviour:
   rangeAttack: 5
   limitSound: 0
   TimeOutofVision: 1
-  rangeShearing: 10
+  searchRange: 5
