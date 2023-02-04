@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class IdleState : BaseStateMachineState
 {
-    private readonly Entity controller;
+    private readonly Enemy controller;
 
     private float timeExitState = 5;
     private float counterTime;
 
-    public IdleState(Entity controller)
+    public IdleState(Enemy controller)
     {
         this.controller = controller;
     }
@@ -41,7 +41,7 @@ public class IdleState : BaseStateMachineState
 
             var angle = Vector3.Angle(controller.wayPoints[controller.wayPoints.Count - 2].transform.position - controller.transform.position, controller.transform.forward);
 
-            Debug.Log(angle);
+            // Debug.Log(angle);
 
             if (angle <= 5)
             {

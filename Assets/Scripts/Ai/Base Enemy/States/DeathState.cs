@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class DeathState : BaseStateMachineState
 {
-    private readonly Entity controller;
+    private readonly Enemy controller;
 
-    public DeathState(Entity controller)
+    public DeathState(Enemy controller)
     {
         this.controller = controller;
     }

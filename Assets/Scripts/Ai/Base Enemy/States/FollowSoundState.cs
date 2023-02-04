@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class FollowSoundState : BaseStateMachineState
 {
-    private readonly Entity controller;
+    private readonly Enemy controller;
 
     private Vector3 target;
 
-    public FollowSoundState(Entity controller)
+    public FollowSoundState(Enemy controller)
     {
         this.controller = controller;
     }

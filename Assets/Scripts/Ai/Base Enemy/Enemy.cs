@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Entity : MonoBehaviour, IDetectionSound
+public class Enemy : MonoBehaviour, IDetectionSound
 {
     [Header("Parameters")]
     public EntityStats stats;
@@ -41,6 +41,7 @@ public class Entity : MonoBehaviour, IDetectionSound
     #region Custom Gizmo
 
     [Header("Settings Gizmo")]
+
     [Tooltip("Cambia el color de las Flechas que señalan el camino de patrullaje")]
     public Color colorLine = new Color(0, 0, 0, 1);
 
@@ -49,11 +50,21 @@ public class Entity : MonoBehaviour, IDetectionSound
     [Tooltip("Cambia el color de las lineas limites de vision")]
     public Color colorLimitVision = new Color(0, 0, 0, 1);
 
+    [Tooltip("Puedes Visualizar cual es la ruta que esta creando")]
+    public bool isActivePathView;
+    [Tooltip("Cambia te color la ruta")]
+    public Color colorPathView = new Color(0, 0, 0, 1);
+
     #endregion
 
     public virtual void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+
+        foreach (var item in wayPoints)
+        {
+            item.parent = null;
+        }
 
         idle = new IdleState(this);
         followPlayer = new FollowPlayerState(this);
@@ -113,7 +124,10 @@ public class Entity : MonoBehaviour, IDetectionSound
 
             var rotateSpeedV = Mathf.Clamp(Vector3.Distance(transform.position, wayPoints[counterIndex].transform.position), stats.minRotateSpeed, stats.maxRotateSpeed);
 
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((wayPoints[counterIndex].transform.position - transform.position).normalized), rotateSpeedV * Time.deltaTime);
+            if (agent.path.corners.Length > 1)
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((agent.path.corners[1] - transform.position).normalized), rotateSpeedV * Time.deltaTime);
+            else
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((wayPoints[counterIndex].transform.position - transform.position).normalized), rotateSpeedV * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, wayPoints[counterIndex].transform.position) < 2f)
             {
@@ -209,5 +223,22 @@ public class Entity : MonoBehaviour, IDetectionSound
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
+        if (isActivePathView)
+        {
+            if (agent.path.corners.Length > 1)
+            {
+                Gizmos.color = colorPathView;
+
+                for (int i = 0; i < agent.path.corners.Length - 1; i++)
+                {
+                    Gizmos.DrawLine(agent.path.corners[i], agent.path.corners[i + 1]);
+                }
+
+                foreach (var item in agent.path.corners)
+                {
+                    Gizmos.DrawSphere(item, .25f);
+                }
+            }
+        }
     }
 }
