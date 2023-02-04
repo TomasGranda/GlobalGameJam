@@ -64,10 +64,13 @@ public class PlayerController : MonoBehaviour
             // Gravity
             if (!IsOnClimb())
             {
-                if (!isOnFloor)
-                    moveDirection.y -= model.gravityMagnitude * Time.deltaTime;
-
                 characterController.Move(moveDirection * Time.deltaTime);
+
+                if (!isOnFloor)
+                {
+                    moveDirection.y -= model.gravityMagnitude * Time.deltaTime;
+                    view.SetAnimationVerticalSpeed(moveDirection.y);
+                }
             }
 
             CheckWalls();
@@ -127,6 +130,11 @@ public class PlayerController : MonoBehaviour
     public bool GetJumpButtonDown()
     {
         return inputAsset.FindAction("Jump").WasPressedThisFrame();
+    }
+
+    public bool GetRunButton()
+    {
+        return inputAsset.FindAction("Run").IsPressed();
     }
 
     public bool GetShootButtonDown()

@@ -9,6 +9,8 @@ public class PlayerModel
     [Header("Stats")]
     public float speed = 1;
 
+    public float runSpeedMultiplier = 1;
+
     public float jumpSpeed = 8;
 
     public float gravityMagnitude = 20;
