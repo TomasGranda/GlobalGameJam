@@ -22,6 +22,10 @@ public class IdleState : BaseStateMachineState
     public override void ExecuteState()
     {
         Waiting();
+
+        ChangeViewPlayer();
+        
+        ChangeDetectionSound();
     }
 
     public override void OnExitState()
@@ -40,8 +44,6 @@ public class IdleState : BaseStateMachineState
             controller.transform.rotation = Quaternion.Slerp(controller.transform.rotation, Quaternion.LookRotation(controller.wayPoints[controller.wayPoints.Count - 2].transform.position - controller.transform.position), 2 * Time.deltaTime);
 
             var angle = Vector3.Angle(controller.wayPoints[controller.wayPoints.Count - 2].transform.position - controller.transform.position, controller.transform.forward);
-
-            // Debug.Log(angle);
 
             if (angle <= 5)
             {

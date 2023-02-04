@@ -13,16 +13,23 @@ public class FollowPlayerState : BaseStateMachineState
 
     public override void OnEnterState(params object[] objects)
     {
-        throw new System.NotImplementedException();
+        controller.agent.stoppingDistance = controller.stats.rangeAttack;
     }
 
     public override void ExecuteState()
     {
-        throw new System.NotImplementedException();
+        controller.FollowTarget(controller.playerTarget.position);
+
+        controller.RotateTargetPlayer();
+
+        if (Vector3.Distance(controller.transform.position, controller.playerTarget.position) < controller.stats.rangeAttack && controller.isOnVision())
+        {
+            controller.stateMachine.Transition<AttackState>();
+        }
     }
 
     public override void OnExitState()
     {
-        throw new System.NotImplementedException();
+
     }
 }

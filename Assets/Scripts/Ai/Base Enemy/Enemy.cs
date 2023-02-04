@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour, IDetectionSound
     [Tooltip("layers de los obstaculos ejem : Paredes")]
     public LayerMask obstacleMask;
 
-    public Vector3 target { get; private set; }
+    public Transform playerTarget { get; private set; }
 
     /////////////////////////////////////////////////////////////////////////////
 
@@ -46,16 +46,24 @@ public class Enemy : MonoBehaviour, IDetectionSound
     public Color colorLine = new Color(0, 0, 0, 1);
 
     [Tooltip("Cambia el Color de la esfera de vision")]
-    public Color colorSphere = new Color(0, 0, 0, 1);
+    public Color colorRangeVision = new Color(0, 0, 0, 1);
+
+    [Tooltip("Cambia el Color de la esfera de vision")]
+    public Color colorRangeAttack = new Color(0, 0, 0, 1);
 
     [Tooltip("Cambia el color de las lineas limites de vision")]
     public Color colorLimitVision = new Color(0, 0, 0, 1);
 
     [Header("Route Customization")]
+
     [Tooltip("Puedes Visualizar cual es la ruta que esta creando")]
     public bool isActivePathView;
+
     [Tooltip("Cambia te color la ruta")]
     public Color colorPathView = new Color(0, 0, 0, 1);
+
+    [Header("Active Current StateMachine")]
+    public bool isActiveCurrentStateMachine = false;
 
     #endregion
 
@@ -85,6 +93,9 @@ public class Enemy : MonoBehaviour, IDetectionSound
     {
         if (stateMachine.current != null)
             stateMachine.OnUpdate();
+
+        if (isActiveCurrentStateMachine)
+            Debug.Log(stateMachine.current);
     }
 
     public virtual void SetChangeState()
@@ -99,12 +110,18 @@ public class Enemy : MonoBehaviour, IDetectionSound
         followPlayer.AddTransition(attack);
         followPlayer.AddTransition(death);
 
+        followSound.AddTransition(attack);
+        followSound.AddTransition(patrol);
+        followSound.AddTransition(idle);
+        followSound.AddTransition(death);
+
         patrol.AddTransition(idle);
         patrol.AddTransition(followSound);
         patrol.AddTransition(followPlayer);
         patrol.AddTransition(death);
 
         attack.AddTransition(idle);
+        attack.AddTransition(followPlayer);
 
         stateMachine.Init(patrol);
     }
@@ -118,21 +135,9 @@ public class Enemy : MonoBehaviour, IDetectionSound
     {
         if (counterIndex <= wayPoints.Count - 1)
         {
-            agent.speed = stats.maxMoveSpeed;
-            agent.acceleration = stats.maxMoveSpeed + 4.5f;
+            FollowTarget(wayPoints[counterIndex].position);
 
-            agent.SetDestination(wayPoints[counterIndex].position);
-
-            // var moveSpeedV = Mathf.Clamp(Vector3.Distance(transform.position, wayPoints[counterIndex].transform.position), stats.minMoveSpeed, stats.maxMoveSpeed);
-
-            // transform.position += transform.forward.normalized * moveSpeedV * Time.deltaTime;
-
-            var rotateSpeedV = Mathf.Clamp(Vector3.Distance(transform.position, wayPoints[counterIndex].transform.position), stats.minRotateSpeed, stats.maxRotateSpeed);
-
-            if (agent.path.corners.Length > 1)
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((agent.path.corners[1] - transform.position).normalized), rotateSpeedV * Time.deltaTime);
-            else
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation((wayPoints[counterIndex].transform.position - transform.position).normalized), rotateSpeedV * Time.deltaTime);
+            RotateNetxNode();
 
             if (Vector3.Distance(transform.position, wayPoints[counterIndex].transform.position) < 2f)
             {
@@ -152,9 +157,50 @@ public class Enemy : MonoBehaviour, IDetectionSound
         }
     }
 
+    public void RotateNetxNode()
+    {
+        var rotateSpeedV = Mathf.Clamp(Vector3.Distance(transform.position, wayPoints[counterIndex].transform.position), stats.minRotateSpeed, stats.maxRotateSpeed);
+
+        if (agent.path.corners.Length > 1)
+            RotateTarget(agent.path.corners[1], rotateSpeedV);
+        else
+            RotateTarget(wayPoints[counterIndex].transform.position, rotateSpeedV);
+
+    }
+
+    public void RotateTargetPlayer()
+    {
+        var rotateSpeedV = Mathf.Clamp(Vector3.Distance(transform.position, agent.path.corners[1]), stats.minRotateSpeed, stats.maxRotateSpeed);
+
+        if (agent.path.corners.Length > 1)
+            RotateTarget(agent.path.corners[1], rotateSpeedV);
+        else
+            RotateTarget(playerTarget.position, rotateSpeedV);
+
+    }
+
+    public void RotateTarget(Vector3 target, float speed)
+    {
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation((target - transform.position).normalized), speed * Time.deltaTime);
+    }
+
+    public void FollowTarget(Vector3 target)
+    {
+        agent.speed = stats.moveSpeed;
+
+        agent.acceleration = stats.moveSpeed + 4.5f;
+
+        agent.SetDestination(target);
+
+        // var moveSpeedV = Mathf.Clamp(Vector3.Distance(transform.position, wayPoints[counterIndex].transform.position), stats.minMoveSpeed, stats.maxMoveSpeed);
+
+        // transform.position += transform.forward.normalized * moveSpeedV * Time.deltaTime;
+    }
+
     #endregion
 
     #region Cono Vision
+
     public bool isOnVision()
     {
         var countCollision = Physics.OverlapSphere(transform.position, stats.rangeVision, playerMask);
@@ -163,13 +209,11 @@ public class Enemy : MonoBehaviour, IDetectionSound
         {
             var playerPosition = countCollision[0].transform;
 
-            target = playerPosition.position;
+            playerTarget = playerPosition;
 
-            RaycastHit hit;
-
-            if (!Physics.Raycast(transform.position, target - transform.position, out hit, Vector3.Distance(transform.position, target), obstacleMask))
+            if (!Physics.Raycast(transform.position, playerTarget.position - transform.position, Vector3.Distance(transform.position, playerTarget.position), obstacleMask))
             {
-                var angle = Vector3.Angle(target - transform.position, transform.forward);
+                var angle = Vector3.Angle(playerTarget.position - transform.position, transform.forward);
 
                 return angle < stats.angleVision;
             }
@@ -189,6 +233,13 @@ public class Enemy : MonoBehaviour, IDetectionSound
     }
 
     #endregion
+
+    public IEnumerator DisableObject(float disableTime = 2)
+    {
+        yield return new WaitForSeconds(disableTime);
+
+        gameObject.SetActive(false);
+    }
 
     private void OnDrawGizmos()
     {
@@ -216,9 +267,17 @@ public class Enemy : MonoBehaviour, IDetectionSound
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
-        Gizmos.color = colorSphere;
+        Gizmos.color = colorRangeVision;
 
         Gizmos.DrawWireSphere(transform.position, stats.rangeVision);
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+
+        Gizmos.color = colorRangeAttack;
+
+        Gizmos.DrawWireSphere(transform.position, stats.rangeAttack);
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////
 
         Gizmos.color = colorLimitVision;
 
