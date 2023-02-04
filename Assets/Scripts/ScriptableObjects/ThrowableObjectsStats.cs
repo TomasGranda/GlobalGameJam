@@ -9,6 +9,10 @@ public class ThrowableObjectsStats : ScriptableObject
     public float maximumSound = 5;
     [Tooltip("Area en la que se expande el sonido")]
     public float soundArea = 5;
+
+    [Tooltip("Area de Efectos")]
+    public float limits;
+
     [Tooltip("Los objetos que peuden detectar estos sonidos")]
     public LayerMask layerMask;
 }

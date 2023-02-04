@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PatrolState : BaseStateMachineState
 {
@@ -13,7 +14,9 @@ public class PatrolState : BaseStateMachineState
 
     public override void OnEnterState(params object[] objects)
     {
+        var list = controller.wayPoints.OrderBy(x => Vector3.Distance(controller.transform.position, x.position)).ToList();
 
+        controller.counterIndex = controller.wayPoints.IndexOf(list[0]);
     }
 
     public override void ExecuteState()
