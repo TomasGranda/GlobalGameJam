@@ -20,7 +20,11 @@ public class FollowSoundState : BaseStateMachineState
 
     public override void ExecuteState()
     {
-        controller.agent.SetDestination(target);
+        if (Vector3.Distance(controller.transform.position, target) > controller.stats.rangeShearing)
+        {
+            controller.RotateTargetPlayer();
+            controller.FollowTarget(target);
+        }
     }
 
     public override void OnExitState()

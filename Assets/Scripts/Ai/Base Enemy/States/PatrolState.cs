@@ -24,10 +24,6 @@ public class PatrolState : BaseStateMachineState
         {
             controller.stateMachine.Transition<FollowPlayerState>();
         }
-        else
-        {
-
-        }
     }
 
     public override void OnExitState()
