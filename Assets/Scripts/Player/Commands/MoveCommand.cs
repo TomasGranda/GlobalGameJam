@@ -16,6 +16,11 @@ public class MoveCommand : Command
         var movement = controller.GetMovementVector();
         movement.z = 0;
 
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "GameScenes")
+        {
+            movement.x = -movement.x;
+        }
+
         controller.characterController.Move(movement * controller.model.speed * Time.deltaTime);
     }
 
