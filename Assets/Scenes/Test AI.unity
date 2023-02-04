@@ -942,8 +942,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 1
-  m_Acceleration: 1
+  m_Speed: 3.5
+  m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 0
   m_StoppingDistance: 0
@@ -999,6 +999,8 @@ MonoBehaviour:
   colorLine: {r: 0.3042903, g: 1, b: 0, a: 1}
   colorSphere: {r: 0.7264151, g: 0.4968405, b: 0.4968405, a: 1}
   colorLimitVision: {r: 0.745283, g: 0.23553754, b: 0.23553754, a: 1}
+  isActivePathView: 0
+  colorPathView: {r: 0, g: 0, b: 0, a: 1}
 --- !u!23 &1410810868
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 714f7eacea06f314abf8d3eaf06fd63d, type: 3}
   m_Name: EntityStats_1
   m_EditorClassIdentifier: 
-  maxLife: 0
+  maxLife: 100
   minMoveSpeed: 1
-  maxMoveSpeed: 5
+  maxMoveSpeed: 4
   minRotateSpeed: 1
-  maxRotateSpeed: 6
-  rangeVision: 5
+  maxRotateSpeed: 3
+  rangeVision: 10
   angleVision: 45
-  rangeAttack: 0
+  rangeAttack: 1
   limitSound: 0

@@ -47,9 +47,11 @@ public class Enemy : MonoBehaviour, IDetectionSound
 
     [Tooltip("Cambia el Color de la esfera de vision")]
     public Color colorSphere = new Color(0, 0, 0, 1);
+
     [Tooltip("Cambia el color de las lineas limites de vision")]
     public Color colorLimitVision = new Color(0, 0, 0, 1);
 
+    [Header("Route Customization")]
     [Tooltip("Puedes Visualizar cual es la ruta que esta creando")]
     public bool isActivePathView;
     [Tooltip("Cambia te color la ruta")]
@@ -116,6 +118,9 @@ public class Enemy : MonoBehaviour, IDetectionSound
     {
         if (counterIndex <= wayPoints.Count - 1)
         {
+            agent.speed = stats.maxMoveSpeed;
+            agent.acceleration = stats.maxMoveSpeed + 4.5f;
+
             agent.SetDestination(wayPoints[counterIndex].position);
 
             // var moveSpeedV = Mathf.Clamp(Vector3.Distance(transform.position, wayPoints[counterIndex].transform.position), stats.minMoveSpeed, stats.maxMoveSpeed);
@@ -223,7 +228,7 @@ public class Enemy : MonoBehaviour, IDetectionSound
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
-        if (isActivePathView)
+        if (isActivePathView && agent != null)
         {
             if (agent.path.corners.Length > 1)
             {
