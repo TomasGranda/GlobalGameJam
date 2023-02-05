@@ -25,4 +25,14 @@ public class PlayerView
         animator.SetBool("Jumping", state);
     }
 
+    public void SetAnimationasd()
+    {
+        animator.SetTrigger("asd");
+    }
+
+    public void SetAnimationOnFloor(bool state)
+    {
+        animator.SetBool("OnFloor", state);
+    }
+
 }

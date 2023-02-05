@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     // TODO: Borrar
     int counter = 0;
 
-    void Update()
+    private void Update()
     {
         if (!cliffAnimation)
         {
@@ -71,6 +71,8 @@ public class PlayerController : MonoBehaviour
                     moveDirection.y -= model.gravityMagnitude * Time.deltaTime;
                     view.SetAnimationVerticalSpeed(moveDirection.y);
                 }
+                else
+                    view.SetAnimationVerticalSpeed(0);
             }
 
             CheckWalls();
@@ -112,6 +114,10 @@ public class PlayerController : MonoBehaviour
     public bool CheckIsPlayerOnFloor()
     {
         isOnFloor = Physics.Raycast(transform.position, Vector3.down, model.groundCheckRaycastLenght, model.floorMask);
+        if (moveDirection.y <= 0)
+        {
+            view.SetAnimationOnFloor(isOnFloor);
+        }
         return isOnFloor;
     }
     #endregion
@@ -156,6 +162,13 @@ public class PlayerController : MonoBehaviour
     public bool IsOnClimb()
     {
         return isClimbing || isOnCliff;
+    }
+
+    public void HandleJumpEvent()
+    {
+        moveDirection.y = model.jumpSpeed;
+        view.SetAnimationOnFloor(false);
+        view.SetAnimationasd();
     }
 
     private void OnDrawGizmos()
