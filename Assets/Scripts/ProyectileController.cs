@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ProyectileController : MonoBehaviour
 {
-    public float speed = 1;
+    public float force = 1;
 
     void Update()
     {
-        transform.position += transform.forward * speed * Time.deltaTime;
+        GetComponent<Rigidbody>().AddForce(transform.forward * force);
     }
 }

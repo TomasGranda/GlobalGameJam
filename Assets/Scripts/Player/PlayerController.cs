@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
 
     private Commands commands;
 
+    public bool canAttack = true;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -52,63 +54,51 @@ public class PlayerController : MonoBehaviour
         commands.AddCommand(attackCommand);
     }
 
-    // TODO: Borrar
-    int counter = 0;
-
-    void Update()
+    private void Update()
     {
-        if (!cliffAnimation)
+        commands.ExecuteCommands();
+
+        // Gravity
+        if (!IsOnClimb())
         {
-            commands.ExecuteCommands();
+            characterController.Move(moveDirection * Time.deltaTime);
 
-            // Gravity
-            if (!IsOnClimb())
+            if (!isOnFloor)
             {
-                if (!isOnFloor)
-                    moveDirection.y -= model.gravityMagnitude * Time.deltaTime;
-
-                characterController.Move(moveDirection * Time.deltaTime);
+                moveDirection.y -= model.gravityMagnitude * Time.deltaTime;
+                view.SetAnimationVerticalSpeed(moveDirection.y);
             }
-
-            CheckWalls();
-            CheckIsPlayerOnFloor();
+            else
+                view.SetAnimationVerticalSpeed(0);
         }
-        else
-        {
-            if (counter <= 2)
-                characterController.Move(Vector3.up);
 
-            if (counter > 2 && counter < 4)
-                characterController.Move(Vector3.right);
-
-            counter++;
-
-            if (counter >= 4)
-            {
-                cliffAnimation = false;
-                counter = 0;
-            }
-        }
+        CheckWalls();
+        CheckIsPlayerOnFloor();
     }
 
     #region RaycastCheckers
     public void CheckWalls()
     {
-        // TODO: Replace all Vector3.right to transform.forward
-        var newIsClimbing = Physics.Raycast(transform.position, Vector3.right, model.wallCheckRaycastLenght, model.climbableWallLayer);
+        var newIsClimbing = Physics.Raycast(transform.position, transform.forward, model.wallCheckRaycastLenght, model.climbableWallLayer);
 
-        isOnCliff = Physics.Raycast(transform.position, Vector3.right, model.wallCheckRaycastLenght, model.cliffLayer);
+        isOnCliff = Physics.Raycast(transform.position, transform.forward, model.wallCheckRaycastLenght, model.cliffLayer);
 
         if (isClimbing && isClimbing != newIsClimbing && !isOnCliff)
         {
-            characterController.Move(Vector3.left * .1f);
+            characterController.Move(-transform.forward * .1f);
         }
         isClimbing = newIsClimbing;
+        view.SetClimbAnimation(isClimbing);
+        view.SetOnCliffAnimation(isOnCliff);
     }
 
     public bool CheckIsPlayerOnFloor()
     {
         isOnFloor = Physics.Raycast(transform.position, Vector3.down, model.groundCheckRaycastLenght, model.floorMask);
+        if (moveDirection.y <= 0)
+        {
+            view.SetAnimationOnFloor(isOnFloor);
+        }
         return isOnFloor;
     }
     #endregion
@@ -127,6 +117,11 @@ public class PlayerController : MonoBehaviour
     public bool GetJumpButtonDown()
     {
         return inputAsset.FindAction("Jump").WasPressedThisFrame();
+    }
+
+    public bool GetRunButton()
+    {
+        return inputAsset.FindAction("Run").IsPressed();
     }
 
     public bool GetShootButtonDown()
@@ -149,6 +144,39 @@ public class PlayerController : MonoBehaviour
     {
         return isClimbing || isOnCliff;
     }
+
+    #region AnimationHandlers
+    public void HandleJumpEvent()
+    {
+        moveDirection.y = model.jumpSpeed;
+        view.SetAnimationOnFloor(false);
+        view.SetAnimationasd();
+    }
+
+    public void HandleAttackRefreshEvent()
+    {
+        canAttack = true;
+    }
+
+    public Transform modelPosition;
+
+    public void HandleCliffUpEndsEvent()
+    {
+        var child = GetComponentInChildren<AnimationEventsHandler>().transform;
+        transform.position = child.Find("Center").transform.position;
+        StartCoroutine(SetModelPosition());
+
+    }
+
+    private IEnumerator SetModelPosition()
+    {
+        yield return new WaitForEndOfFrame();
+        var child = GetComponentInChildren<AnimationEventsHandler>().transform;
+        child.localPosition = modelPosition.localPosition;
+        yield return new WaitForSeconds(.1f);
+        transform.position = child.Find("Center").transform.position;
+    }
+    #endregion
 
     private void OnDrawGizmos()
     {

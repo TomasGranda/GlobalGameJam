@@ -19,18 +19,23 @@ public class JumpCommand : Command
 
     public void Execute()
     {
-        if (controller.GetJumpButtonDown() && controller.isOnFloor)
+        if (controller.isClimbing)
         {
-            controller.moveDirection.y = model.jumpSpeed;
+            characterController.Move(-transform.forward * .5f);
+        }
+        else if (controller.GetJumpButtonDown() && controller.isOnFloor)
+        {
+            controller.view.SetAnimationJump(true);
         }
     }
 
     public void Reset()
     {
+        controller.view.SetAnimationJump(false);
     }
 
     public bool ShouldExecute()
     {
-        return controller.GetJumpButtonDown() && controller.isOnFloor && !controller.isClimbing;
+        return controller.GetJumpButtonDown() && controller.isOnFloor;
     }
 }
