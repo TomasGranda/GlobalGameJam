@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        asd();
         if (!cliffAnimation)
         {
             commands.ExecuteCommands();
@@ -111,6 +112,7 @@ public class PlayerController : MonoBehaviour
         }
         isClimbing = newIsClimbing;
         view.SetClimbAnimation(isClimbing);
+        view.SetOnCliffAnimation(isOnCliff);
     }
 
     public bool CheckIsPlayerOnFloor()
@@ -177,6 +179,34 @@ public class PlayerController : MonoBehaviour
     public void HandleAttackRefreshEvent()
     {
         canAttack = true;
+    }
+
+    public Transform modelPosition;
+
+    public void asd()
+    {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            var child = GetComponentInChildren<AnimationEventsHandler>().transform;
+            child.localPosition = modelPosition.localPosition;
+        }
+    }
+
+    public void HandleCliffUpEndsEvent()
+    {
+        var child = GetComponentInChildren<AnimationEventsHandler>().transform;
+        transform.position = child.Find("Center").transform.position;
+        StartCoroutine(SetModelPosition());
+
+    }
+
+    private IEnumerator SetModelPosition()
+    {
+        yield return new WaitForEndOfFrame();
+        var child = GetComponentInChildren<AnimationEventsHandler>().transform;
+        child.localPosition = modelPosition.localPosition;
+        yield return new WaitForSeconds(.1f);
+        transform.position = child.Find("Center").transform.position;
     }
     #endregion
 

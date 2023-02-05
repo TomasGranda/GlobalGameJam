@@ -13,7 +13,8 @@ public class ClimbCliffCommand : Command
 
     public void Execute()
     {
-        controller.cliffAnimation = true;
+        // controller.cliffAnimation = true;
+        controller.view.SetCliffUpAnimation();
     }
 
     public void Reset()

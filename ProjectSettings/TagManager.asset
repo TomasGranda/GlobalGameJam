@@ -19,9 +19,9 @@ TagManager:
   - Postprocessing
   - 
   - 
-  - 
-  - 
-  - 
+  - ClimbableWall
+  - Cliff
+  - Floor
   - 
   - 
   - 
