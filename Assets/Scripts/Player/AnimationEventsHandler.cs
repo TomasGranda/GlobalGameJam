@@ -10,4 +10,9 @@ public class AnimationEventsHandler : MonoBehaviour
     {
         controller.HandleJumpEvent();
     }
+
+    public void AttackRefreshEvent()
+    {
+        controller.HandleAttackRefreshEvent();
+    }
 }

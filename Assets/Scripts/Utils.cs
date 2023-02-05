@@ -10,7 +10,7 @@ public class Utils
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 2000))
+        if (Physics.Raycast(Camera.main.transform.position, ray.direction, out hit, 20000000))
         {
             var targetable = hit.collider.transform.GetComponent<Targetable>();
             if (targetable != null)
