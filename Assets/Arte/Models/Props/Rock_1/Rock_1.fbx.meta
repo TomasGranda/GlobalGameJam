@@ -3,7 +3,12 @@ guid: 80ff998181fabb54385fe94473bfb0b9
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: piedra retopologia 2_Default
+    second: {fileID: 2100000, guid: a687ec7c088d6424a9595fb4395cf5ba, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
