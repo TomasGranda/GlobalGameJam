@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
 
     private Commands commands;
 
+    public bool canAttack = true;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -94,16 +96,16 @@ public class PlayerController : MonoBehaviour
     #region RaycastCheckers
     public void CheckWalls()
     {
-        // TODO: Replace all Vector3.right to transform.forward
-        var newIsClimbing = Physics.Raycast(transform.position, Vector3.right, model.wallCheckRaycastLenght, model.climbableWallLayer);
+        var newIsClimbing = Physics.Raycast(transform.position, transform.forward, model.wallCheckRaycastLenght, model.climbableWallLayer);
 
-        isOnCliff = Physics.Raycast(transform.position, Vector3.right, model.wallCheckRaycastLenght, model.cliffLayer);
+        isOnCliff = Physics.Raycast(transform.position, transform.forward, model.wallCheckRaycastLenght, model.cliffLayer);
 
         if (isClimbing && isClimbing != newIsClimbing && !isOnCliff)
         {
-            characterController.Move(Vector3.left * .1f);
+            characterController.Move(-transform.forward * .1f);
         }
         isClimbing = newIsClimbing;
+        view.SetClimbAnimation(isClimbing);
     }
 
     public bool CheckIsPlayerOnFloor()
@@ -149,6 +151,20 @@ public class PlayerController : MonoBehaviour
     {
         return isClimbing || isOnCliff;
     }
+
+    #region AnimationHandlers
+    public void HandleJumpEvent()
+    {
+        moveDirection.y = model.jumpSpeed;
+        view.SetAnimationOnFloor(false);
+        view.SetAnimationasd();
+    }
+
+    public void HandleAttackRefreshEvent()
+    {
+        canAttack = true;
+    }
+    #endregion
 
     private void OnDrawGizmos()
     {

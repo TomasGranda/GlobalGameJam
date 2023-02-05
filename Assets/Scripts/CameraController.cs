@@ -24,13 +24,10 @@ public class CameraController : MonoBehaviour
         initialPosition = transform.position;
     }
 
-    void Update()
+    void LateUpdate()
     {
         Destroy(targetImage);
         targetImage = null;
-
-        Vector3 newPosition = new Vector3(initialPosition.x + player.position.x, initialPosition.y, initialPosition.z);
-        transform.position = newPosition;
 
         TargetablePoint target = Utils.GetTargetPoint();
         if (target != null)

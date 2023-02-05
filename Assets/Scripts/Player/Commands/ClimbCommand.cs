@@ -16,10 +16,12 @@ public class ClimbCommand : Command
         var movement = controller.GetClimbVector();
 
         controller.characterController.Move(movement * controller.model.speed * Time.deltaTime);
+        controller.view.SetClimbSpeedAnimation(movement.y);
     }
 
     public void Reset()
     {
+        controller.view.SetClimbSpeedAnimation(0);
     }
 
     public bool ShouldExecute()
