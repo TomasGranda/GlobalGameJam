@@ -19,7 +19,11 @@ public class JumpCommand : Command
 
     public void Execute()
     {
-        if (controller.GetJumpButtonDown() && controller.isOnFloor)
+        if (controller.isClimbing)
+        {
+            characterController.Move(-transform.forward * .5f);
+        }
+        else if (controller.GetJumpButtonDown() && controller.isOnFloor)
         {
             controller.view.SetAnimationJump(true);
         }
@@ -32,6 +36,6 @@ public class JumpCommand : Command
 
     public bool ShouldExecute()
     {
-        return controller.GetJumpButtonDown() && controller.isOnFloor && !controller.isClimbing;
+        return controller.GetJumpButtonDown() && controller.isOnFloor;
     }
 }

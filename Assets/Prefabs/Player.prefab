@@ -2044,9 +2044,9 @@ GameObject:
   - component: {fileID: 6478940674541939541}
   - component: {fileID: 6478940674541939537}
   - component: {fileID: 6478940674541939536}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2117,7 +2117,7 @@ MonoBehaviour:
     proyectilePrefab: {fileID: -8755954737203338987, guid: b01774e57aa9ffb49b273de0e5d1216f,
       type: 3}
     verticalMovementStepSize: 2
-    maxVerticalSteps: 3
+    maxVerticalSteps: 2
   view:
     animator: {fileID: 2969521091252194832}
     movementSpeedAnimationParam: Speed

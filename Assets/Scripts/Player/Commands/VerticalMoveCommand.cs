@@ -7,7 +7,7 @@ public class VerticalMoveCommand : Command
 
     private PlayerModel model;
 
-    private float positionIndex = 0;
+    private float positionIndex = 1;
 
     public VerticalMoveCommand(PlayerController controller)
     {
@@ -22,7 +22,7 @@ public class VerticalMoveCommand : Command
         if (controller.GetDownButtonDown()) movement--;
         if (controller.GetUpButtonDown()) movement++;
 
-        if (positionIndex + movement > model.maxVerticalSteps) movement = 0;
+        if (positionIndex + movement > model.maxVerticalSteps || positionIndex + movement < 0) movement = 0;
 
         positionIndex += movement;
 
