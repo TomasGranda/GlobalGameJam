@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(NavMeshAgent), typeof(Animator))]
 public class Enemy : MonoBehaviour, IDetectionSound
 {
     [Header("Parameters")]
@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour, IDetectionSound
 
     public StateMachine stateMachine = new StateMachine();
     public NavMeshAgent agent { get; private set; }
+    public Animator animator { get; private set; }
 
     #region States
     private IdleState idle;
@@ -79,6 +80,8 @@ public class Enemy : MonoBehaviour, IDetectionSound
     {
         agent = GetComponent<NavMeshAgent>();
 
+        animator = GetComponent<Animator>();
+
         foreach (var item in wayPoints)
         {
             item.parent = null;
@@ -102,6 +105,8 @@ public class Enemy : MonoBehaviour, IDetectionSound
 
         if (isActiveCurrentStateMachine)
             Debug.Log(stateMachine.current);
+
+        animator.SetFloat("Speed", agent.velocity.magnitude);
     }
 
     public virtual void SetChangeState()
