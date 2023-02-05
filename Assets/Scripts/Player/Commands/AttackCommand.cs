@@ -16,8 +16,10 @@ public class AttackCommand : Command
         TargetablePoint target = Utils.GetTargetPoint();
         if (target != null)
         {
+            controller.canAttack = false;
             var direction = target.transform.position - transform.position;
             GameObject.Instantiate(controller.model.proyectilePrefab, transform.position, Quaternion.LookRotation(direction.normalized, Vector3.up));
+            controller.view.SetAnimationThrow();
         }
     }
 
@@ -27,6 +29,6 @@ public class AttackCommand : Command
 
     public bool ShouldExecute()
     {
-        return controller.GetShootButtonDown();
+        return controller.GetShootButtonDown() && controller.canAttack;
     }
 }

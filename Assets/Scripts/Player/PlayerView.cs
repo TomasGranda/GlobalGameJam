@@ -35,4 +35,19 @@ public class PlayerView
         animator.SetBool("OnFloor", state);
     }
 
+    public void SetAnimationThrow()
+    {
+        animator.SetTrigger("Throw");
+    }
+
+    public void SetClimbAnimation(bool state)
+    {
+        animator.SetBool("Climbing", state);
+    }
+
+    public void SetClimbSpeedAnimation(float speed)
+    {
+        animator.SetFloat("ClimbingSpeed", speed);
+    }
+
 }
