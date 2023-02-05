@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EntityStats_1
   m_EditorClassIdentifier: 
   maxLife: 100
-  moveSpeed: 1
+  moveSpeed: 3.5
   minRotateSpeed: 1
   maxRotateSpeed: 3
   rangeVision: 10

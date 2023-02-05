@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent), typeof(Animator))]
-public class Enemy : MonoBehaviour, IDetectionSound
+public class Enemy : MonoBehaviour, IDetectionSound, IDamage
 {
     [Header("Parameters")]
     public EntityStats stats;
@@ -336,5 +336,15 @@ public class Enemy : MonoBehaviour, IDetectionSound
                 }
             }
         }
+    }
+
+    public void Damage()
+    {
+        
+    }
+
+    public void FireDamage()
+    {
+        
     }
 }
