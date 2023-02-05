@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
     // TODO: Borrar
     int counter = 0;
 
-    void Update()
+    private void Update()
     {
         if (!cliffAnimation)
         {
@@ -66,10 +66,15 @@ public class PlayerController : MonoBehaviour
             // Gravity
             if (!IsOnClimb())
             {
-                if (!isOnFloor)
-                    moveDirection.y -= model.gravityMagnitude * Time.deltaTime;
-
                 characterController.Move(moveDirection * Time.deltaTime);
+
+                if (!isOnFloor)
+                {
+                    moveDirection.y -= model.gravityMagnitude * Time.deltaTime;
+                    view.SetAnimationVerticalSpeed(moveDirection.y);
+                }
+                else
+                    view.SetAnimationVerticalSpeed(0);
             }
 
             CheckWalls();
@@ -111,6 +116,10 @@ public class PlayerController : MonoBehaviour
     public bool CheckIsPlayerOnFloor()
     {
         isOnFloor = Physics.Raycast(transform.position, Vector3.down, model.groundCheckRaycastLenght, model.floorMask);
+        if (moveDirection.y <= 0)
+        {
+            view.SetAnimationOnFloor(isOnFloor);
+        }
         return isOnFloor;
     }
     #endregion
@@ -129,6 +138,11 @@ public class PlayerController : MonoBehaviour
     public bool GetJumpButtonDown()
     {
         return inputAsset.FindAction("Jump").WasPressedThisFrame();
+    }
+
+    public bool GetRunButton()
+    {
+        return inputAsset.FindAction("Run").IsPressed();
     }
 
     public bool GetShootButtonDown()
@@ -155,7 +169,6 @@ public class PlayerController : MonoBehaviour
     #region AnimationHandlers
     public void HandleJumpEvent()
     {
-        
         moveDirection.y = model.jumpSpeed;
         view.SetAnimationOnFloor(false);
         view.SetAnimationasd();
