@@ -17,4 +17,4 @@ MonoBehaviour:
   limits: 1
   layerMask:
     serializedVersion: 2
-    m_Bits: 65536
+    m_Bits: 131072

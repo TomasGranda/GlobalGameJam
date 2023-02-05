@@ -28,11 +28,11 @@ public class FollowSoundState : BaseStateMachineState
         if (Vector3.Distance(controller.transform.position, target) > controller.stats.searchRange)
         {
             controller.RotateTargetPlayer();
-            controller.FollowTarget(target);
+            controller.FollowTarget(target, 2);
         }
         else
         {
-            controller.stateMachine.Transition<SearchState>();
+            controller.stateMachine.Transition<SearchState>(target);
         }
     }
 
