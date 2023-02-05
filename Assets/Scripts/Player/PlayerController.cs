@@ -155,6 +155,7 @@ public class PlayerController : MonoBehaviour
     #region AnimationHandlers
     public void HandleJumpEvent()
     {
+        
         moveDirection.y = model.jumpSpeed;
         view.SetAnimationOnFloor(false);
         view.SetAnimationasd();

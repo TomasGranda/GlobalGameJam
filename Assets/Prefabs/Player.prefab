@@ -2037,7 +2037,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model:
     speed: 5
-    runSpeedMultiplier: 3
     jumpSpeed: 8
     gravityMagnitude: 20
     groundCheckRaycastLenght: 3.09
@@ -2051,13 +2050,15 @@ MonoBehaviour:
     cliffLayer:
       serializedVersion: 2
       m_Bits: 16384
-    proyectilePrefab: {fileID: -8755954737203338987, guid: b01774e57aa9ffb49b273de0e5d1216f, type: 3}
+    proyectilePrefab: {fileID: -8755954737203338987, guid: b01774e57aa9ffb49b273de0e5d1216f,
+      type: 3}
     verticalMovementStepSize: 2
     maxVerticalSteps: 3
   view:
     animator: {fileID: 2969521091252194832}
     movementSpeedAnimationParam: Speed
-  inputAsset: {fileID: -944628639613478452, guid: 5316723040cb03e418ca8edeb6d2233f, type: 3}
+  inputAsset: {fileID: -944628639613478452, guid: 5316723040cb03e418ca8edeb6d2233f,
+    type: 3}
   debug: 0
   isClimbing: 0
   isOnCliff: 0
@@ -2077,7 +2078,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 5316723040cb03e418ca8edeb6d2233f, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: 5316723040cb03e418ca8edeb6d2233f,
+    type: 3}
   m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
