@@ -154,7 +154,7 @@ public class Enemy : MonoBehaviour, IDetectionSound, IDamage
     {
         if (counterIndex <= wayPoints.Count - 1)
         {
-            FollowTarget(wayPoints[counterIndex].position);
+            FollowTarget(wayPoints[counterIndex].position, stats.moveSpeed);
 
             RotateNetxNode();
 
@@ -194,7 +194,10 @@ public class Enemy : MonoBehaviour, IDetectionSound, IDamage
         if (agent.path.corners.Length > 1)
             RotateTarget(agent.path.corners[1], rotateSpeedV);
         else
-            RotateTarget(playerTarget.position, rotateSpeedV);
+        {
+            if (playerTarget != null)
+                RotateTarget(playerTarget.position, rotateSpeedV);
+        }
 
     }
 
@@ -203,9 +206,9 @@ public class Enemy : MonoBehaviour, IDetectionSound, IDamage
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation((target - transform.position).normalized), speed * Time.deltaTime);
     }
 
-    public void FollowTarget(Vector3 target)
+    public void FollowTarget(Vector3 target, float speed)
     {
-        agent.speed = stats.moveSpeed;
+        agent.speed = speed;
 
         agent.acceleration = stats.moveSpeed + 4.5f;
 
@@ -248,6 +251,8 @@ public class Enemy : MonoBehaviour, IDetectionSound, IDamage
 
     public void DetectCollisionSound(Vector3 target)
     {
+        Debug.Log("sad");
+
         stateMachine.Transition<FollowSoundState>(target);
     }
 
@@ -260,10 +265,14 @@ public class Enemy : MonoBehaviour, IDetectionSound, IDamage
         gameObject.SetActive(false);
     }
 
+
+    public Vector3 asd;
+
     private void OnDrawGizmos()
     {
-        // Gizmos.color = Color.black;
+        Gizmos.color = Color.black;
 
+        Gizmos.DrawSphere(asd, 2f);
         // Gizmos.DrawSphere(wayPoints[counterIndex].transform.position, .5f);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -339,7 +348,6 @@ public class Enemy : MonoBehaviour, IDetectionSound, IDamage
             }
         }
     }
-
 
     private float currentDamage;
 
