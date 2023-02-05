@@ -9,7 +9,7 @@
                     "name": "Movement",
                     "type": "Value",
                     "id": "3f5a37b1-d346-4edb-8b2b-b62f3c12b593",
-                    "expectedControlType": "Vector3",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -54,6 +54,15 @@
                     "name": "Shoot",
                     "type": "Button",
                     "id": "3f70859c-6d53-4045-8352-3a67198c249e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Run",
+                    "type": "Button",
+                    "id": "8f3dc900-3d6e-4202-b68a-f02b55202dc0",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -190,6 +199,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6846e431-9150-4ad4-a6dc-1d6177b3ddc1",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Run",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

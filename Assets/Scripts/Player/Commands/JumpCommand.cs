@@ -21,12 +21,13 @@ public class JumpCommand : Command
     {
         if (controller.GetJumpButtonDown() && controller.isOnFloor)
         {
-            controller.moveDirection.y = model.jumpSpeed;
+            controller.view.SetAnimationJump(true);
         }
     }
 
     public void Reset()
     {
+        controller.view.SetAnimationJump(false);
     }
 
     public bool ShouldExecute()
