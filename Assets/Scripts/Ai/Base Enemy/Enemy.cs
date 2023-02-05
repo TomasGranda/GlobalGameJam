@@ -82,6 +82,8 @@ public class Enemy : MonoBehaviour, IDetectionSound, IDamage
 
         animator = GetComponent<Animator>();
 
+        currentDamage = stats.maxLife;
+
         foreach (var item in wayPoints)
         {
             item.parent = null;
@@ -338,13 +340,24 @@ public class Enemy : MonoBehaviour, IDetectionSound, IDamage
         }
     }
 
-    public void Damage()
+
+    private float currentDamage;
+
+    public void Damage(float damage)
     {
-        
+        if (currentDamage > stats.maxLife)
+        {
+            currentDamage -= damage;
+        }
+        else if (currentDamage <= stats.maxLife && stateMachine.current.ToString() != death.ToString())
+        {
+            animator.SetTrigger("Death");
+            stateMachine.Transition<DeathState>();
+        }
     }
 
-    public void FireDamage()
+    public void FireDamage(float damage)
     {
-        
+
     }
 }

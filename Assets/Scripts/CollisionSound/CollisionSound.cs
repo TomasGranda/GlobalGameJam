@@ -9,13 +9,15 @@ public class CollisionSound : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        // Debug.Log("asd");
+
         Collider[] players = Physics.OverlapSphere(transform.position, throwableObjects.soundArea, throwableObjects.layerMask);
 
         foreach (var player in players)
         {
             // var soundProvoked = throwableObjects.maximumSound * ((player.transform.position - transform.position).magnitude / throwableObjects.soundArea);
 
-            var collisionTarget = player.GetComponent<IDetectionSound>();
+            var collisionTarget = player.GetComponent<Enemy>();
 
             if (collisionTarget != null)
             {
@@ -24,9 +26,9 @@ public class CollisionSound : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
-        Gizmos.color = Color.black;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, throwableObjects.soundArea);
     }
 }
