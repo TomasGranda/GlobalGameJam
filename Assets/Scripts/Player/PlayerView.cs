@@ -60,4 +60,9 @@ public class PlayerView
         animator.SetTrigger("CliffUp");
     }
 
+    public void SetDeathAnimation()
+    {
+        animator.SetTrigger("Death");
+    }
+
 }

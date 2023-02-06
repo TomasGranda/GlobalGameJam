@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamage
 {
     public PlayerModel model;
 
@@ -196,5 +196,15 @@ public class PlayerController : MonoBehaviour
                 Gizmos.DrawRay(transform.position, direction * 300);
             }
         }
+    }
+
+    public void Damage(float damage)
+    {
+        view.SetDeathAnimation();
+    }
+
+    public void FireDamage(float damage)
+    {
+        view.SetDeathAnimation();
     }
 }
