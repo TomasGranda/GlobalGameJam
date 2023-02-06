@@ -47,9 +47,9 @@ public class SearchState : BaseStateMachineState
 
         // controller.agent.SetDestination(newPosition);
 
-        controller.RotateTarget(newPosition, 1);
+        controller.RotateTarget(newPosition, controller.stats.maxRotateSpeed);
 
-        controller.FollowTarget(newPosition,1);
+        controller.FollowTarget(newPosition, controller.stats.moveSpeed);
     }
 
     public override void OnExitState()
@@ -85,8 +85,6 @@ public class SearchState : BaseStateMachineState
         {
             ranPositionZ = Random.Range(target.z - minRange, target.z - maxRange);
         }
-
-        controller.asd = new Vector3(ranPositionX, controller.transform.position.y, ranPositionZ);
 
         return new Vector3(ranPositionX, controller.transform.position.y, ranPositionZ);
     }

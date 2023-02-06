@@ -2683,17 +2683,15 @@ MonoBehaviour:
     m_Bits: 12288
   isActiveLine: 1
   colorLine: {r: 0.3042903, g: 1, b: 0, a: 1}
-  isActiveRangeVision: 0
+  isActiveRangeVision: 1
   colorRangeVision: {r: 0, g: 0, b: 0, a: 1}
-  isActiveRangeAttack: 0
+  isActiveRangeAttack: 1
   colorRangeAttack: {r: 0, g: 0, b: 0, a: 1}
-  isActiveAngleVision: 0
+  isActiveAngleVision: 1
   colorLimitVision: {r: 0.745283, g: 0.23553754, b: 0.23553754, a: 1}
   isActivePathView: 1
   colorPathView: {r: 1, g: 0, b: 0, a: 1}
   isActiveCurrentStateMachine: 1
-  debug: 0
-  asd: {x: 0, y: 0, z: 0}
 --- !u!195 &7454043864484334448
 NavMeshAgent:
   m_ObjectHideFlags: 0

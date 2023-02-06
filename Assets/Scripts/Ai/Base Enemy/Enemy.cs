@@ -100,14 +100,12 @@ public class Enemy : MonoBehaviour, IDetectionSound, IDamage
         SetChangeState();
     }
 
-    public bool debug;
-
     public virtual void Update()
     {
         if (stateMachine.current != null)
             stateMachine.OnUpdate();
 
-        if (isActiveCurrentStateMachine && debug)
+        if (isActiveCurrentStateMachine)
             Debug.Log(stateMachine.current);
 
         animator.SetFloat("Speed", agent.velocity.magnitude);
@@ -265,14 +263,23 @@ public class Enemy : MonoBehaviour, IDetectionSound, IDamage
         gameObject.SetActive(false);
     }
 
+    public void Attack()
+    {
+        var a = Physics.OverlapSphere(transform.position, stats.rangeAttack, playerMask);
 
-    public Vector3 asd;
+        foreach (var item in a)
+        {
+            var col = item.GetComponent<IDamage>();
+
+            if (col != null)
+            {
+                col.Damage(1000000);
+            }
+        }
+    }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.black;
-
-        Gizmos.DrawSphere(asd, 2f);
         // Gizmos.DrawSphere(wayPoints[counterIndex].transform.position, .5f);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
