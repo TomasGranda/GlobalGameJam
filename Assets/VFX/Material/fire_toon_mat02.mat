@@ -64,7 +64,7 @@ Material:
     - _DstBlend: 0
     - _FireDetail: 10
     - _FirePower: 0.444
-    - _FireThreshold: -0.682
+    - _FireThreshold: -0.534
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
