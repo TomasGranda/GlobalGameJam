@@ -18,7 +18,7 @@ public class FollowPlayerState : BaseStateMachineState
 
     public override void ExecuteState()
     {
-        controller.FollowTarget(controller.playerTarget.position);
+        controller.FollowTarget(controller.playerTarget.position, controller.stats.runSpeed);
 
         controller.RotateTargetPlayer();
 

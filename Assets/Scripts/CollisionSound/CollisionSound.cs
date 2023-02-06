@@ -9,15 +9,19 @@ public class CollisionSound : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        // Debug.Log("asd");
+        OnShootSound();
+    }
 
+
+    public void OnShootSound()
+    {
         Collider[] players = Physics.OverlapSphere(transform.position, throwableObjects.soundArea, throwableObjects.layerMask);
 
         foreach (var player in players)
         {
             // var soundProvoked = throwableObjects.maximumSound * ((player.transform.position - transform.position).magnitude / throwableObjects.soundArea);
 
-            var collisionTarget = player.GetComponent<Enemy>();
+            var collisionTarget = player.GetComponent<IDetectionSound>();
 
             if (collisionTarget != null)
             {
