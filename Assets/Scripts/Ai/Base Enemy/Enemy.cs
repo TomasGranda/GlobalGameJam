@@ -263,6 +263,21 @@ public class Enemy : MonoBehaviour, IDetectionSound, IDamage
         gameObject.SetActive(false);
     }
 
+    public void Attack()
+    {
+        var a = Physics.OverlapSphere(transform.position, stats.rangeAttack, playerMask);
+
+        foreach (var item in a)
+        {
+            var col = item.GetComponent<IDamage>();
+
+            if (col != null)
+            {
+                col.Damage(1000000);
+            }
+        }
+    }
+
     private void OnDrawGizmos()
     {
         // Gizmos.DrawSphere(wayPoints[counterIndex].transform.position, .5f);
