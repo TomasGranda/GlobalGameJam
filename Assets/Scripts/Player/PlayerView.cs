@@ -50,4 +50,19 @@ public class PlayerView
         animator.SetFloat("ClimbingSpeed", speed);
     }
 
+    public void SetOnCliffAnimation(bool state)
+    {
+        animator.SetBool("OnCliff", state);
+    }
+
+    public void SetCliffUpAnimation()
+    {
+        animator.SetTrigger("CliffUp");
+    }
+
+    public void SetDeathAnimation()
+    {
+        animator.SetTrigger("Death");
+    }
+
 }

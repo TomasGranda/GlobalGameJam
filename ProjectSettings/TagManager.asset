@@ -19,12 +19,12 @@ TagManager:
   - Postprocessing
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - ClimbableWall
+  - Cliff
+  - Floor
+  - Player
+  - Enemy
+  - InvisibleWall
   - 
   - 
   - 

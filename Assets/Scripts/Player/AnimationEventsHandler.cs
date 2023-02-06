@@ -15,4 +15,9 @@ public class AnimationEventsHandler : MonoBehaviour
     {
         controller.HandleAttackRefreshEvent();
     }
+
+    public void CliffUpEndsEvent()
+    {
+        controller.HandleCliffUpEndsEvent();
+    }
 }

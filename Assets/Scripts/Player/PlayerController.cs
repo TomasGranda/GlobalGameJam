@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamage
 {
     public PlayerModel model;
 
@@ -54,48 +54,26 @@ public class PlayerController : MonoBehaviour
         commands.AddCommand(attackCommand);
     }
 
-    // TODO: Borrar
-    int counter = 0;
-
     private void Update()
     {
-        if (!cliffAnimation)
+        commands.ExecuteCommands();
+
+        // Gravity
+        if (!IsOnClimb())
         {
-            commands.ExecuteCommands();
+            characterController.Move(moveDirection * Time.deltaTime);
 
-            // Gravity
-            if (!IsOnClimb())
+            if (!isOnFloor)
             {
-                characterController.Move(moveDirection * Time.deltaTime);
-
-                if (!isOnFloor)
-                {
-                    moveDirection.y -= model.gravityMagnitude * Time.deltaTime;
-                    view.SetAnimationVerticalSpeed(moveDirection.y);
-                }
-                else
-                    view.SetAnimationVerticalSpeed(0);
+                moveDirection.y -= model.gravityMagnitude * Time.deltaTime;
+                view.SetAnimationVerticalSpeed(moveDirection.y);
             }
-
-            CheckWalls();
-            CheckIsPlayerOnFloor();
+            else
+                view.SetAnimationVerticalSpeed(0);
         }
-        else
-        {
-            if (counter <= 2)
-                characterController.Move(Vector3.up);
 
-            if (counter > 2 && counter < 4)
-                characterController.Move(Vector3.right);
-
-            counter++;
-
-            if (counter >= 4)
-            {
-                cliffAnimation = false;
-                counter = 0;
-            }
-        }
+        CheckWalls();
+        CheckIsPlayerOnFloor();
     }
 
     #region RaycastCheckers
@@ -111,6 +89,7 @@ public class PlayerController : MonoBehaviour
         }
         isClimbing = newIsClimbing;
         view.SetClimbAnimation(isClimbing);
+        view.SetOnCliffAnimation(isOnCliff);
     }
 
     public bool CheckIsPlayerOnFloor()
@@ -178,6 +157,25 @@ public class PlayerController : MonoBehaviour
     {
         canAttack = true;
     }
+
+    public Transform modelPosition;
+
+    public void HandleCliffUpEndsEvent()
+    {
+        var child = GetComponentInChildren<AnimationEventsHandler>().transform;
+        transform.position = child.Find("Center").transform.position;
+        StartCoroutine(SetModelPosition());
+
+    }
+
+    private IEnumerator SetModelPosition()
+    {
+        yield return new WaitForEndOfFrame();
+        var child = GetComponentInChildren<AnimationEventsHandler>().transform;
+        child.localPosition = modelPosition.localPosition;
+        yield return new WaitForSeconds(.1f);
+        transform.position = child.Find("Center").transform.position;
+    }
     #endregion
 
     private void OnDrawGizmos()
@@ -198,5 +196,15 @@ public class PlayerController : MonoBehaviour
                 Gizmos.DrawRay(transform.position, direction * 300);
             }
         }
+    }
+
+    public void Damage(float damage)
+    {
+        view.SetDeathAnimation();
+    }
+
+    public void FireDamage(float damage)
+    {
+        view.SetDeathAnimation();
     }
 }

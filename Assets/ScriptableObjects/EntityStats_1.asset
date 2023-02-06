@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 714f7eacea06f314abf8d3eaf06fd63d, type: 3}
   m_Name: EntityStats_1
   m_EditorClassIdentifier: 
-  maxLife: 100
-  moveSpeed: 1
+  maxLife: 0
+  moveSpeed: 22.26
   minRotateSpeed: 1
   maxRotateSpeed: 3
   rangeVision: 10
@@ -21,4 +21,4 @@ MonoBehaviour:
   rangeAttack: 5
   limitSound: 0
   TimeOutofVision: 1
-  searchRange: 5
+  searchRange: 15

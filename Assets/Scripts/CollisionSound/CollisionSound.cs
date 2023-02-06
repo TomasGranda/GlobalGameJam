@@ -9,6 +9,12 @@ public class CollisionSound : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        OnShootSound();
+    }
+
+
+    public void OnShootSound()
+    {
         Collider[] players = Physics.OverlapSphere(transform.position, throwableObjects.soundArea, throwableObjects.layerMask);
 
         foreach (var player in players)
@@ -24,9 +30,9 @@ public class CollisionSound : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
-        Gizmos.color = Color.black;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, throwableObjects.soundArea);
     }
 }

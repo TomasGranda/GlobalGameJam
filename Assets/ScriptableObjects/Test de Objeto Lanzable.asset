@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maximumSound: 5
   soundArea: 1000
+  limits: 1
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 131072

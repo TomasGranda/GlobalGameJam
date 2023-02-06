@@ -47,6 +47,6 @@ public class MoveCommand : Command
 
     public bool ShouldExecute()
     {
-        return controller.GetMovementVector().magnitude > 0 && !controller.IsOnClimb();
+        return controller.GetMovementVector().magnitude > 0 && !controller.IsOnClimb() && controller.canAttack;
     }
 }

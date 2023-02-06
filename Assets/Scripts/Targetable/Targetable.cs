@@ -11,8 +11,11 @@ public class Targetable : MonoBehaviour
         var proyectile = other.GetComponent<ProyectileController>();
         if (proyectile != null)
         {
-            Debug.Log("Death");
+            var dmg = GetComponent<IDamage>();
+            if (dmg != null) dmg.Damage(200);
+
             Destroy(proyectile.gameObject);
+            OnDeath();
         }
     }
 

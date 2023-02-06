@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent), typeof(Animator))]
-public class Enemy : MonoBehaviour, IDetectionSound
+public class Enemy : MonoBehaviour, IDetectionSound, IDamage
 {
     [Header("Parameters")]
     public EntityStats stats;
@@ -82,6 +82,8 @@ public class Enemy : MonoBehaviour, IDetectionSound
 
         animator = GetComponent<Animator>();
 
+        currentDamage = stats.maxLife;
+
         foreach (var item in wayPoints)
         {
             item.parent = null;
@@ -98,12 +100,14 @@ public class Enemy : MonoBehaviour, IDetectionSound
         SetChangeState();
     }
 
+    public bool debug;
+
     public virtual void Update()
     {
         if (stateMachine.current != null)
             stateMachine.OnUpdate();
 
-        if (isActiveCurrentStateMachine)
+        if (isActiveCurrentStateMachine && debug)
             Debug.Log(stateMachine.current);
 
         animator.SetFloat("Speed", agent.velocity.magnitude);
@@ -152,7 +156,7 @@ public class Enemy : MonoBehaviour, IDetectionSound
     {
         if (counterIndex <= wayPoints.Count - 1)
         {
-            FollowTarget(wayPoints[counterIndex].position);
+            FollowTarget(wayPoints[counterIndex].position, stats.moveSpeed);
 
             RotateNetxNode();
 
@@ -192,7 +196,10 @@ public class Enemy : MonoBehaviour, IDetectionSound
         if (agent.path.corners.Length > 1)
             RotateTarget(agent.path.corners[1], rotateSpeedV);
         else
-            RotateTarget(playerTarget.position, rotateSpeedV);
+        {
+            if (playerTarget != null)
+                RotateTarget(playerTarget.position, rotateSpeedV);
+        }
 
     }
 
@@ -201,9 +208,9 @@ public class Enemy : MonoBehaviour, IDetectionSound
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation((target - transform.position).normalized), speed * Time.deltaTime);
     }
 
-    public void FollowTarget(Vector3 target)
+    public void FollowTarget(Vector3 target, float speed)
     {
-        agent.speed = stats.moveSpeed;
+        agent.speed = speed;
 
         agent.acceleration = stats.moveSpeed + 4.5f;
 
@@ -258,10 +265,14 @@ public class Enemy : MonoBehaviour, IDetectionSound
         gameObject.SetActive(false);
     }
 
+
+    public Vector3 asd;
+
     private void OnDrawGizmos()
     {
-        // Gizmos.color = Color.black;
+        Gizmos.color = Color.black;
 
+        Gizmos.DrawSphere(asd, 2f);
         // Gizmos.DrawSphere(wayPoints[counterIndex].transform.position, .5f);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -336,5 +347,25 @@ public class Enemy : MonoBehaviour, IDetectionSound
                 }
             }
         }
+    }
+
+    private float currentDamage;
+
+    public void Damage(float damage)
+    {
+        if (currentDamage > stats.maxLife)
+        {
+            currentDamage -= damage;
+        }
+        else if (currentDamage <= stats.maxLife && stateMachine.current.ToString() != death.ToString())
+        {
+            animator.SetTrigger("Death");
+            stateMachine.Transition<DeathState>();
+        }
+    }
+
+    public void FireDamage(float damage)
+    {
+
     }
 }
