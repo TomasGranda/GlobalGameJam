@@ -2130,6 +2130,12 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0, z: 0}
   cliffAnimation: 0
   canAttack: 1
+  asd:
+    serializedVersion: 2
+    m_Bits: 524288
+  scene:
+    sceneAsset: {fileID: 102900000, guid: 91ef37173a69de345a3d893b13965a17, type: 3}
+    scenePath: Assets/Scenes/Level2Story.unity
   modelPosition: {fileID: 1758991337}
 --- !u!114 &6478940674541939536
 MonoBehaviour:

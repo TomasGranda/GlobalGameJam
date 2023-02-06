@@ -189,6 +189,7 @@ public class Enemy : MonoBehaviour, IDetectionSound, IDamage
 
     public void RotateTargetPlayer()
     {
+        if (agent.path.corners.Length <= 1) return;
         var rotateSpeedV = Mathf.Clamp(Vector3.Distance(transform.position, agent.path.corners[1]), stats.minRotateSpeed, stats.maxRotateSpeed);
 
         if (agent.path.corners.Length > 1)

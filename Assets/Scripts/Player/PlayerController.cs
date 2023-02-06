@@ -54,8 +54,16 @@ public class PlayerController : MonoBehaviour, IDamage
         commands.AddCommand(attackCommand);
     }
 
+    public LayerMask asd;
+    public SceneReference scene;
+
     private void Update()
     {
+        if (Physics.Raycast(transform.position, transform.forward, 5, asd))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(scene);
+        }
+
         commands.ExecuteCommands();
 
         // Gravity

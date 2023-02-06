@@ -1174,7 +1174,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 23058389}
-  m_LocalRotation: {x: -0.0000000013780784, y: 0.9870875, z: -0.16018225, w: -0.000000008492101}
+  m_LocalRotation: {x: 0.0000000013780783, y: 0.9870875, z: -0.16018224, w: 0.000000008492101}
   m_LocalPosition: {x: 1160.36, y: 51.599586, z: -714.2}
   m_LocalScale: {x: 1.01573, y: 0.99899, z: 0.99183995}
   m_ConstrainProportionsScale: 0
@@ -31732,7 +31732,8 @@ GameObject:
   - component: {fileID: 1344362828}
   - component: {fileID: 1344362830}
   - component: {fileID: 1344362831}
-  m_Layer: 0
+  - component: {fileID: 1344362832}
+  m_Layer: 19
   m_Name: SceneSwitch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31750,8 +31751,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 23.41697, z: 15.189148}
-  m_Center: {x: 0, y: -1.3874931, z: -1.2656555}
+  m_Size: {x: 1, y: 14.744514, z: 15.189148}
+  m_Center: {x: 0, y: 2.9487343, z: -1.2656555}
 --- !u!4 &1344362829
 Transform:
   m_ObjectHideFlags: 0
@@ -31796,8 +31797,20 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1344362832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344362827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e35bcc5daa9285a49acc4bde87d63c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1350737248
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31929,7 +31942,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1352731202}
-  m_LocalRotation: {x: -0.0000000013780784, y: 0.9870875, z: -0.16018225, w: -0.000000008492101}
+  m_LocalRotation: {x: 0.0000000013780783, y: 0.9870875, z: -0.16018224, w: 0.000000008492101}
   m_LocalPosition: {x: 1160.36, y: 51.599586, z: -714.2}
   m_LocalScale: {x: 1.01573, y: 0.99899, z: 0.99183995}
   m_ConstrainProportionsScale: 0
@@ -37779,10 +37792,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 23058391, guid: a06f900aba4adcc48b011590a11b8a94, type: 3}
-      propertyPath: canvas
-      value: 
-      objectReference: {fileID: 1269892865}
     - target: {fileID: 6478940674541939542, guid: a06f900aba4adcc48b011590a11b8a94,
         type: 3}
       propertyPath: m_RootOrder
