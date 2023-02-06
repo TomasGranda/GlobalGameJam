@@ -100,12 +100,14 @@ public class Enemy : MonoBehaviour, IDetectionSound, IDamage
         SetChangeState();
     }
 
+    public bool debug;
+
     public virtual void Update()
     {
         if (stateMachine.current != null)
             stateMachine.OnUpdate();
 
-        if (isActiveCurrentStateMachine)
+        if (isActiveCurrentStateMachine && debug)
             Debug.Log(stateMachine.current);
 
         animator.SetFloat("Speed", agent.velocity.magnitude);
@@ -251,8 +253,6 @@ public class Enemy : MonoBehaviour, IDetectionSound, IDamage
 
     public void DetectCollisionSound(Vector3 target)
     {
-        Debug.Log("sad");
-
         stateMachine.Transition<FollowSoundState>(target);
     }
 

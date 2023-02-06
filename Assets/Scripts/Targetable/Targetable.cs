@@ -13,6 +13,7 @@ public class Targetable : MonoBehaviour
         {
             Debug.Log("Death");
             Destroy(proyectile.gameObject);
+            OnDeath();
         }
     }
 

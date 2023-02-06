@@ -8,16 +8,23 @@ public class ExplosiveBarrel : Targetable
 
     public bool debug;
 
+    public GameObject boom;
+
     public override void OnDeath()
     {
         base.OnDeath();
+
+        boom.SetActive(true);
+        boom.transform.parent = null;
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, explotionRadio);
 
         foreach (Collider collider in colliders)
         {
-            Debug.Log(collider.name + "is death");
+            collider.GetComponent<IDamage>()?.Damage(2000);
         }
+
+        Destroy(this.gameObject);
     }
 
     private void OnDrawGizmos()

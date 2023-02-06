@@ -40,8 +40,6 @@ public class SearchState : BaseStateMachineState
             controller.stateMachine.Transition<PatrolState>();
         }
 
-        Debug.Log(Vector3.Distance(newPosition, controller.transform.position));
-
         if (Vector3.Distance(newPosition, controller.transform.position) < 1f)
         {
             newPosition = NewPosition();
@@ -87,8 +85,6 @@ public class SearchState : BaseStateMachineState
         {
             ranPositionZ = Random.Range(target.z - minRange, target.z - maxRange);
         }
-
-        Debug.Log(new Vector3(ranPositionX, 0, ranPositionZ));
 
         controller.asd = new Vector3(ranPositionX, controller.transform.position.y, ranPositionZ);
 

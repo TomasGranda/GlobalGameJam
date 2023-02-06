@@ -18,6 +18,8 @@ public class AttackCommand : Command
         {
             controller.canAttack = false;
             var direction = target.transform.position - transform.position;
+            transform.rotation = Quaternion.Euler(0, direction.x > 0 ? 90 : -90, 0);
+
             GameObject.Instantiate(controller.model.proyectilePrefab, transform.position, Quaternion.LookRotation(direction.normalized, Vector3.up));
             controller.view.SetAnimationThrow();
         }
