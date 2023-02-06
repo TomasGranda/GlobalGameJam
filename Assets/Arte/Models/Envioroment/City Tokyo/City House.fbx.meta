@@ -3,7 +3,12 @@ guid: 9c47ea52cc1787248bcff48ec365fb06
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ocidental House
+    second: {fileID: 2100000, guid: 8c4f321530932754d985f1ba7238c3d4, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
