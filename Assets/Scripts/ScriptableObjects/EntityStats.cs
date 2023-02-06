@@ -9,8 +9,8 @@ public class EntityStats : ScriptableObject
     public float maxLife;
 
     [Header("Velociadad de moviento")]
-    public float moveSpeed = 4;
-    public float runSpeed = 5;
+    public float moveSpeed = 4 * 3.5f;
+    public float runSpeed = 5 * 3.5f;
 
     public float minRotateSpeed = 1;
     public float maxRotateSpeed = 5;
